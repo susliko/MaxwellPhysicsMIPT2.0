@@ -1,8 +1,8 @@
 package Maxwell.physics;
 
 public class Atom {
-    double x;
-    double y;
-    double vx;
-    double vy;
+    public double x;
+    public double y;
+    public double vx;
+    public double vy;
 }
