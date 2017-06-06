@@ -1,6 +1,7 @@
 package Maxwell;
 
 import Maxwell.physics.Atom;
+import Maxwell.plot.Plot;
 import Maxwell.arena.Arena;
 import Maxwell.physics.Drawer;
 import Maxwell.physics.Physics;
@@ -13,13 +14,15 @@ import java.util.Random;
 public class Master {
 
     public static final int HEIGHT = 1000;
+
     public static final int WIDTH  = 1000;
     public static final int D = 4;
     private static final int numberOfAtoms = 4000;
-
     private final List<Atom> atoms = new ArrayList<>();
+
     private final Drawer   drawer  = new Drawer(atoms);
     private final Physics physics  = new Physics(atoms);
+    private final Plot plot = new Plot(atoms);
 
 
     public Master() {
@@ -52,6 +55,7 @@ public class Master {
 
             arena.pack();
             arena.repaint();
+            plot.render();
         }
     }
 }
