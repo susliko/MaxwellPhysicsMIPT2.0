@@ -14,14 +14,16 @@ import java.util.Random;
 public class Master {
 
     public static final int HEIGHT = 1000;
-
     public static final int WIDTH  = 1000;
-    public static final int D = 4;
-    private static final int numberOfAtoms = 4000;
+    public static final int D = 10;
+    private static final int numberOfAtoms = 500;
+
     private final List<Atom> atoms = new ArrayList<>();
 
-    private final Drawer   drawer  = new Drawer(atoms);
+    private final Drawer    drawer = new Drawer(atoms);
     private final Physics physics  = new Physics(atoms);
+    private final Arena arena = new Arena();
+
     private final Plot plot = new Plot(atoms);
 
 
@@ -37,25 +39,36 @@ public class Master {
 
 
     public void run() {
-        int dt = 40;
-        Arena arena = new Arena();
+        int gasTPF = 40;
+        int plotTPF = 1000;
+
         arena.setVisible(true);
         arena.setAtoms(drawer);
 
-        double timeSinceLastUpdate = 0;
-        double timer = System.currentTimeMillis();
-        while (true) {
-            timeSinceLastUpdate += System.currentTimeMillis() - timer;
-            timer = System.currentTimeMillis();
+        double sinceGasUpdate = 0;
+        double sincePlotUpdate = 0;
+        double gasTimer = System.currentTimeMillis();
+        double plotTimer = System.currentTimeMillis();
 
-            while (timeSinceLastUpdate > dt) {
-                physics.update(dt);
-                timeSinceLastUpdate -= dt;
+
+        while (true) {
+            sinceGasUpdate += System.currentTimeMillis() - gasTimer;
+            sincePlotUpdate += System.currentTimeMillis() - plotTimer;
+            gasTimer  = System.currentTimeMillis();
+            plotTimer = System.currentTimeMillis();
+
+            while (sinceGasUpdate > gasTPF) {
+                physics.update(gasTPF);
+                sinceGasUpdate -= gasTPF;
+            }
+
+            if (sincePlotUpdate > plotTPF) {
+                plot.render();
+                sincePlotUpdate = 0;
             }
 
             arena.pack();
             arena.repaint();
-            plot.render();
         }
     }
 }

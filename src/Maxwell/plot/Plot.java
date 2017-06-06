@@ -13,7 +13,7 @@ import java.util.*;
  * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>
  */
 public class Plot {
-    private final ArrayList<Atom> atoms;
+    private final List<Atom> atoms;
     private final SwingWrapper<XYChart> swingWrapper;
 
     private final int numberOfBars;
@@ -31,11 +31,11 @@ public class Plot {
      *
      * @param atomsArray array with information about atoms {@link Atom}
      */
-    public Plot(ArrayList<Atom> atomsArray) {
+    public Plot(List<Atom> atomsArray) {
         atoms = atomsArray;
 
         numberOfBars = 20;
-        resolution = 150;
+        resolution = 45;
 
         double m = 6.6e-27;
         double k = 1.34e-23;
@@ -69,9 +69,8 @@ public class Plot {
      * Updates and redraws the frame
      */
     public void render() {
-        atoms.get(0).vy += 200;
         updateRealDistribution();
-        SwingUtilities.invokeLater(() -> swingWrapper.repaintChart());
+        SwingUtilities.invokeLater(swingWrapper::repaintChart);
     }
 
 
@@ -104,10 +103,11 @@ public class Plot {
         for (Atom atom : atoms) {
             int barIndex = (int)(Math.sqrt(atom.vx * atom.vx + atom.vy * atom.vy) - 1) / resolution;
             if (barIndex >= numberOfBars) {
-                resolution *= 1.5;
-                updateMaxwellDistribution();
-                updateRealDistribution();
-                return;
+                break;
+//                resolution *= 1.5;
+//                updateMaxwellDistribution();
+//                updateRealDistribution();
+//                return;
             }
             realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
         }
