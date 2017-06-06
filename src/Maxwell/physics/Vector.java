@@ -1,4 +1,4 @@
 package Maxwell.physics;
 
-public class Vector {
+class Vector {
 }

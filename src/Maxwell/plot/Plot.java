@@ -1,5 +1,5 @@
 package Maxwell.plot;
 
-public class Plot {
+class Plot {
 
 }
