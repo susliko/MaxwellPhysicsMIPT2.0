@@ -9,39 +9,61 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * Class used for building plots
- * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>
+ * Class used for building plots.
+ * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>.
  */
 public class Plot {
+    /**
+     * Reference to a list of atoms.
+     */
     private final List<Atom> atoms;
+
+    /**
+     * Plot frame.
+     */
     private final SwingWrapper<XYChart> swingWrapper;
 
+    /**
+     * Number of histogram bars.
+     */
     private final int numberOfBars;
+
+    /**
+     * Range of histogram bar.
+     */
     private int resolution;
 
+    /**
+     * XChart object for building plot.
+     */
     private XYChart xyChart;
 
-    private double mkt2;
-    private double maxwellConstant;
+    /**
+     * Maxwell Distribution parameter. 4PI*(m / (2ktPI)) ^ (3/2).
+     */
+    private double a;
+
+    /**
+     * Maxwell Distribution parameter. m / (2kT).
+     */
+    private double b;
 
     /**
      * Plot class constructor.
      * Builds Maxwell distribution, reserves data series for real distribution,
-     * constructs plot frame
+     * constructs plot frame.
      *
-     * @param atomsArray array with information about atoms {@link Atom}
+     * @param atoms array with information about atoms.
+     * @param avgV average value of velocity.
      */
-    public Plot(List<Atom> atomsArray) {
-        atoms = atomsArray;
+    public Plot(List<Atom> atoms, double avgV) {
+        this.atoms = atoms;
 
         numberOfBars = 20;
-        resolution = 45;
+        resolution = 3 * (int)avgV / numberOfBars;
 
-        double m = 6.6e-27;
-        double k = 1.34e-23;
-        double t = 300;
-        mkt2 = m / (2 * k * t);
-        maxwellConstant = 4*Math.PI*Math.pow(mkt2 / Math.PI, 1.5);
+        b = 4 / (Math.PI * avgV * avgV);
+        a = 4 * Math.PI * Math.pow(b / Math.PI, 1.5);
 
 
         xyChart = (new XYChartBuilder()).width(600).height(600).title("Experiment results").build();
@@ -49,6 +71,7 @@ public class Plot {
         xyChart.setYAxisTitle("Probability");
         xyChart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         xyChart.getStyler().setDecimalPattern("#,###.##");
+        xyChart.getStyler().setYAxisMax(0.25);
 
         ArrayList<Double> emptyY = new ArrayList<>(1);
         emptyY.add(0.0);
@@ -66,7 +89,7 @@ public class Plot {
     }
 
     /**
-     * Updates and redraws the frame
+     * Updates and redraws the frame.
      */
     public void render() {
         updateRealDistribution();
@@ -75,15 +98,30 @@ public class Plot {
 
 
     /**
-     * Updates Maxwell distribution series
+     * Counts probability of having velocity in range [<code>v</code>..{@link Plot#resolution}].
+     * Uses Maxwell distribution.
+     *
+     * @param v beginning velocity of range.
+     * @return probability of having required velocity.
+     */
+    private double maxwellProbability(double v) {
+        return (a * v*v * Math.exp(-b * v*v));
+    }
+
+
+    /**
+     * Updates Maxwell distribution series.
      */
     private void updateMaxwellDistribution(){
         ArrayList<Double> maxwellDistributionX = new ArrayList<>();
         ArrayList<Double> maxwellDistributionY = new ArrayList<>();
-        for (int i = 0; i < numberOfBars * 2; i++) {
-            double v = i * resolution / 2;
-            maxwellDistributionX.add(v);
-            maxwellDistributionY.add(resolution * maxwellConstant * v*v * Math.exp(-mkt2 * v*v));
+        maxwellDistributionX.add(0.0);
+        maxwellDistributionY.add(maxwellProbability(0.0));
+        for (int i = 0; i < numberOfBars; i++) {
+            double currV = i * resolution;
+            double nextV = (i + 1) * resolution;
+            maxwellDistributionX.add(currV + resolution / 2);
+            maxwellDistributionY.add(resolution * (maxwellProbability(currV) + maxwellProbability(nextV)) / 2);
         }
         xyChart.updateXYSeries("Maxwell Distribution",
                                maxwellDistributionX,
@@ -92,7 +130,7 @@ public class Plot {
     }
 
     /**
-     * Updated real distribution series
+     * Updated real distribution series.
      *
      * @see Atom
      */
@@ -102,13 +140,8 @@ public class Plot {
             realDistribution.add(i, 0);
         for (Atom atom : atoms) {
             int barIndex = (int)(Math.sqrt(atom.vx * atom.vx + atom.vy * atom.vy) - 1) / resolution;
-            if (barIndex >= numberOfBars) {
+            if (barIndex >= numberOfBars)
                 break;
-//                resolution *= 1.5;
-//                updateMaxwellDistribution();
-//                updateRealDistribution();
-//                return;
-            }
             realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
         }
 

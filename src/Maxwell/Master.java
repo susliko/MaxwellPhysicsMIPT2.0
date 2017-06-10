@@ -13,26 +13,28 @@ import java.util.Random;
 
 public class Master {
 
-    public static final int HEIGHT = 1000;
-    public static final int WIDTH  = 1000;
+    public static final int HEIGHT = 600;
+    public static final int WIDTH  = 600;
     public static final int D = 10;
     private static final int numberOfAtoms = 500;
+    private static final double avgV = 400;
 
     private final List<Atom> atoms = new ArrayList<>();
 
-    private final Drawer    drawer = new Drawer(atoms);
+    private final Drawer drawer = new Drawer(atoms);
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
 
-    private final Plot plot = new Plot(atoms);
+    private final Plot plot = new Plot(atoms, avgV);
 
 
     public Master() {
         Random random = new Random(System.currentTimeMillis());
+        int v = (int)Math.floor(Math.sqrt(Math.pow(avgV, 2) / 2));
         for (int i = 0; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH);
             int y = random.nextInt(HEIGHT);
-            physics.addAtom(x, y, 200, 200);
+            physics.addAtom(x, y, v, v);
         }
     }
 
