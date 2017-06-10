@@ -3,6 +3,8 @@ package Maxwell.arena;
 import javax.swing.*;
 import Maxwell.physics.Drawer;
 
+import java.awt.event.KeyListener;
+
 
 public class Arena extends JFrame {
 

@@ -14,9 +14,9 @@ import java.util.Random;
 public class Master {
 
     public static final int HEIGHT = 1000;
-    public static final int WIDTH  = 1000;
-    public static final int D = 10;
-    private static final int numberOfAtoms = 500;
+    public static final int WIDTH  = 1920;
+    public static final int D = 2;
+    private static final int numberOfAtoms = 30000;
 
     private final List<Atom> atoms = new ArrayList<>();
 

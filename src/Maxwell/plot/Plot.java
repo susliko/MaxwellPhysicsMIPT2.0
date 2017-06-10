@@ -74,6 +74,7 @@ public class Plot {
     }
 
 
+
     /**
      * Updates Maxwell distribution series
      */
@@ -103,11 +104,11 @@ public class Plot {
         for (Atom atom : atoms) {
             int barIndex = (int)(Math.sqrt(atom.vx * atom.vx + atom.vy * atom.vy) - 1) / resolution;
             if (barIndex >= numberOfBars) {
-                break;
-//                resolution *= 1.5;
-//                updateMaxwellDistribution();
-//                updateRealDistribution();
-//                return;
+//                break;
+                resolution *= 1.5;
+                updateMaxwellDistribution();
+                updateRealDistribution();
+                return;
             }
             realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
         }
