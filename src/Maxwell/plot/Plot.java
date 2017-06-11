@@ -65,9 +65,21 @@ public abstract class Plot {
         real.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
 
         swingWrapper = new SwingWrapper<>(xyChart);
+    }
+
+
+
+    /**
+     *  Sets the chart visible
+     */
+    public void display() {
         swingWrapper.displayChart();
     }
 
+
+    /**
+     * Updates and redraws the frame
+     */
     public void render() {
         updateRealDistribution();
         SwingUtilities.invokeLater(swingWrapper::repaintChart);

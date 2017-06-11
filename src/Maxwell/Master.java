@@ -1,12 +1,13 @@
 package Maxwell;
 
+import Maxwell.frames.Dialog;
 import Maxwell.physics.Atom;
-import Maxwell.plot.Plot;
-import Maxwell.plot.PlotBolzman;
-import Maxwell.arena.Arena;
+import Maxwell.frames.Arena;
 import Maxwell.physics.Drawer;
 import Maxwell.physics.Physics;
+import Maxwell.plot.Plot;
 import Maxwell.plot.PlotMaxwell;
+import Maxwell.plot.PlotBolzman;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,33 +20,40 @@ public class Master {
     public static final int WIDTH  = 700;
     public static final int D = 5;
     private static final int numberOfAtoms = 1000;
-    private static final double avgVelocity = 400;
 
     private final List<Atom> atoms = new ArrayList<>();
 
     private final Drawer drawer = new Drawer(atoms);
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
+    private final Dialog dialog = new Dialog();
 
-    private final Plot plotBolzman = new PlotMaxwell(atoms, avgVelocity);
+    private Plot plotBolzman;
 
 
-    public Master() {
+    private void generateAtoms(int velocity) {
         Random random = new Random(System.currentTimeMillis());
-        int v = (int)Math.floor(Math.sqrt(Math.pow(avgVelocity, 2) / 2));
+        int v = (int)Math.floor(Math.sqrt(Math.pow(velocity, 2) / 2));
         for (int i = 0; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH);
             int y = random.nextInt(HEIGHT);
             physics.addAtom(x, y, v, v);
         }
+        plotBolzman = new PlotMaxwell(atoms, velocity);
     }
 
 
 
     public void run() {
         int gasTPF = 40;
-        int plotTPF = 2000;
+        int plotTPF = 1000;
 
+        dialog.setVisible(true);
+        int velocity = dialog.getVelocity();
+        dialog.dispose();
+        generateAtoms(velocity);
+
+        plotBolzman.display();
         arena.setVisible(true);
         arena.setAtoms(drawer);
 

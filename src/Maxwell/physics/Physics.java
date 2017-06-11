@@ -41,6 +41,7 @@ public class Physics {
     public void update(int dt) {
 
         for (Atom atom : atoms) {
+//            atom.vy += 10;
             atom.x += atom.vx * dt / 1000;
             atom.y += atom.vy * dt / 1000;
             processBorderCollisions(atom);
@@ -62,10 +63,6 @@ public class Physics {
             grid[n].add(atom);
         }
 
-//        if (grid[0] != null)
-//        for (Atom at : grid[0]) {
-//            System.out.println(at.x + " " + at.y + " " + at.vx + " " + at.vy);
-//        }
 
         for (int i = 0; i < grid.length; ++i) {
 
