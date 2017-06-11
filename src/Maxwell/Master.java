@@ -17,7 +17,7 @@ public class Master {
     public static final int WIDTH  = 700;
     public static final int D = 5;
     private static final int numberOfAtoms = 5000;
-    private static final double avgV = 400;
+    private static final double avgVelocity = 400;
 
     private final List<Atom> atoms = new ArrayList<>();
 
@@ -25,12 +25,12 @@ public class Master {
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
 
-    private final Plot plot = new Plot(atoms, avgV);
+    private final Plot plot = new Plot(atoms, avgVelocity);
 
 
     public Master() {
         Random random = new Random(System.currentTimeMillis());
-        int v = (int)Math.floor(Math.sqrt(Math.pow(avgV, 2) / 2));
+        int v = (int)Math.floor(Math.sqrt(Math.pow(avgVelocity, 2) / 2));
         for (int i = 0; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH);
             int y = random.nextInt(HEIGHT);

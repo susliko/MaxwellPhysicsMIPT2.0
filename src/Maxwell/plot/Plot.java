@@ -48,6 +48,7 @@ public class Plot {
      */
     private double b;
 
+
     /**
      * Plot class constructor.
      * Builds Maxwell distribution, reserves data series for real distribution,
@@ -88,6 +89,7 @@ public class Plot {
         swingWrapper.displayChart();
     }
 
+
     /**
      * Updates and redraws the frame.
      */
@@ -111,6 +113,8 @@ public class Plot {
 
     /**
      * Updates Maxwell distribution series.
+     *
+     * @see Plot#maxwellProbability(double)
      */
     private void updateMaxwellDistribution(){
         ArrayList<Double> maxwellDistributionX = new ArrayList<>();
@@ -129,6 +133,7 @@ public class Plot {
                                null);
     }
 
+
     /**
      * Updated real distribution series.
      *
@@ -141,7 +146,7 @@ public class Plot {
         for (Atom atom : atoms) {
             int barIndex = (int)(Math.sqrt(atom.vx * atom.vx + atom.vy * atom.vy) - 1) / resolution;
             if (barIndex >= numberOfBars)
-                break;
+                continue;
             realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
         }
 
