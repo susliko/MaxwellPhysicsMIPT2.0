@@ -7,7 +7,6 @@ import Maxwell.physics.Drawer;
 import Maxwell.physics.Physics;
 import Maxwell.plot.Plot;
 import Maxwell.plot.PlotMaxwell;
-import Maxwell.plot.PlotBolzman;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class Master {
     private final Arena arena = new Arena();
     private final Dialog dialog = new Dialog();
 
-    private Plot plotBolzman;
+    private Plot plotMaxwell;
 
 
     private void generateAtoms(int velocity) {
@@ -39,7 +38,7 @@ public class Master {
             int y = random.nextInt(HEIGHT);
             physics.addAtom(x, y, v, v);
         }
-        plotBolzman = new PlotMaxwell(atoms, velocity);
+        plotMaxwell = new PlotMaxwell(atoms, velocity);
     }
 
 
@@ -53,7 +52,7 @@ public class Master {
         dialog.dispose();
         generateAtoms(velocity);
 
-        plotBolzman.display();
+//        plotMaxwell.display();
         arena.setVisible(true);
         arena.setAtoms(drawer);
 
@@ -75,7 +74,7 @@ public class Master {
             }
 
             if (sincePlotUpdate > plotTPF) {
-                plotBolzman.render();
+                plotMaxwell.render();
                 sincePlotUpdate = 0;
             }
 
