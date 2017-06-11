@@ -1,10 +1,12 @@
 package Maxwell;
 
 import Maxwell.physics.Atom;
+import Maxwell.plot.Plot;
 import Maxwell.plot.PlotBolzman;
 import Maxwell.arena.Arena;
 import Maxwell.physics.Drawer;
 import Maxwell.physics.Physics;
+import Maxwell.plot.PlotMaxwell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class Master {
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
 
-    private final PlotBolzman plotBolzman = new PlotBolzman(atoms, avgVelocity, 25 * 20, HEIGHT);
+    private final Plot plotBolzman = new PlotBolzman(atoms, avgVelocity, 25*20, HEIGHT);
 
 
     public Master() {
