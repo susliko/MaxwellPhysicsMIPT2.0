@@ -1,7 +1,7 @@
 package Maxwell;
 
 import Maxwell.physics.Atom;
-import Maxwell.plot.Plot;
+import Maxwell.plot.PlotBolzman;
 import Maxwell.arena.Arena;
 import Maxwell.physics.Drawer;
 import Maxwell.physics.Physics;
@@ -16,7 +16,7 @@ public class Master {
     public static final int HEIGHT = 700;
     public static final int WIDTH  = 700;
     public static final int D = 5;
-    private static final int numberOfAtoms = 5000;
+    private static final int numberOfAtoms = 1000;
     private static final double avgVelocity = 400;
 
     private final List<Atom> atoms = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Master {
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
 
-    private final Plot plot = new Plot(atoms, avgVelocity);
+    private final PlotBolzman plotBolzman = new PlotBolzman(atoms, avgVelocity, 25 * 20, HEIGHT);
 
 
     public Master() {
@@ -42,7 +42,7 @@ public class Master {
 
     public void run() {
         int gasTPF = 40;
-        int plotTPF = 1000;
+        int plotTPF = 2000;
 
         arena.setVisible(true);
         arena.setAtoms(drawer);
@@ -65,7 +65,7 @@ public class Master {
             }
 
             if (sincePlotUpdate > plotTPF) {
-                plot.render();
+                plotBolzman.render();
                 sincePlotUpdate = 0;
             }
 
