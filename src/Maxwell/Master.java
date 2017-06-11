@@ -27,7 +27,7 @@ public class Master {
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
 
-    private final Plot plotBolzman = new PlotBolzman(atoms, avgVelocity, 25*20, HEIGHT);
+    private final Plot plotBolzman = new PlotMaxwell(atoms, avgVelocity);
 
 
     public Master() {

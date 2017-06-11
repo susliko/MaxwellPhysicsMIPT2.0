@@ -41,7 +41,6 @@ public class Physics {
     public void update(int dt) {
 
         for (Atom atom : atoms) {
-            atom.vy += 20;
             atom.x += atom.vx * dt / 1000;
             atom.y += atom.vy * dt / 1000;
             processBorderCollisions(atom);
