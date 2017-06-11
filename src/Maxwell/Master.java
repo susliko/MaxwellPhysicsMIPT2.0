@@ -1,8 +1,9 @@
 package Maxwell;
 
+import Maxwell.frames.Dialog;
 import Maxwell.physics.Atom;
 import Maxwell.plot.Plot;
-import Maxwell.arena.Arena;
+import Maxwell.frames.Arena;
 import Maxwell.physics.Drawer;
 import Maxwell.physics.Physics;
 
@@ -14,25 +15,26 @@ import java.util.Random;
 public class Master {
 
     public static final int HEIGHT = 1000;
-    public static final int WIDTH  = 1920;
-    public static final int D = 2;
-    private static final int numberOfAtoms = 30000;
+    public static final int WIDTH  = 960;
+    public static final int D = 4;
+    private static final int numberOfAtoms = 1000;
 
     private final List<Atom> atoms = new ArrayList<>();
 
     private final Drawer    drawer = new Drawer(atoms);
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
+    private final Dialog dialog = new Dialog();
 
     private final Plot plot = new Plot(atoms);
 
 
-    public Master() {
+    private void generateAtoms(int velocity) {
         Random random = new Random(System.currentTimeMillis());
         for (int i = 0; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH);
             int y = random.nextInt(HEIGHT);
-            physics.addAtom(x, y, 200, 200);
+            physics.addAtom(x, y, velocity, velocity);
         }
     }
 
@@ -42,6 +44,12 @@ public class Master {
         int gasTPF = 40;
         int plotTPF = 1000;
 
+        dialog.setVisible(true);
+        int velocity = dialog.getVelocity();
+        dialog.dispose();
+        generateAtoms(velocity);
+
+        plot.display();
         arena.setVisible(true);
         arena.setAtoms(drawer);
 

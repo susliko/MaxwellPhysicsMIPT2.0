@@ -62,8 +62,18 @@ public class Plot {
         updateRealDistribution();
 
         swingWrapper = new SwingWrapper<>(xyChart);
+    }
+
+
+
+    /**
+     *  Sets the chart visible
+     */
+    public void display() {
         swingWrapper.displayChart();
     }
+
+
 
     /**
      * Updates and redraws the frame
