@@ -18,7 +18,7 @@ public class Physics {
     private final int gridWidth;
     private final ArrayList<Atom>[] grid;
 
-    
+
     public Physics(List<Atom> atoms) {
         this.HEIGHT = Maxwell.Master.HEIGHT;
         this.WIDTH = Maxwell.Master.WIDTH;
@@ -29,14 +29,14 @@ public class Physics {
         this.grid = (ArrayList<Atom>[])new ArrayList[gridWidth * gridHeight];
     }
 
-    
-    
+
+
     public void addAtom(double x, double y, double vx, double vy) {
         Atom atom = new Atom(x, y, vx, vy);
         atoms.add(atom);
     }
-    
-    
+
+
 
     public void update(int dt) {
 
@@ -118,8 +118,8 @@ public class Physics {
             }
         }
     }
-    
-    
+
+
 
     private void processBorderCollisions(Atom atom) {
         if (atom.x + D > WIDTH)  { atom.x = WIDTH - D; atom.vx = -atom.vx; }
@@ -129,7 +129,7 @@ public class Physics {
     }
 
 
-    
+
     private void processCollision(Atom atom1, Atom atom2) {
         double dx = atom1.x - atom2.x;
         double dy = atom1.y - atom2.y;

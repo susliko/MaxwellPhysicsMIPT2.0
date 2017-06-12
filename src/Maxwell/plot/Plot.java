@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class used for building plots.
+ * Processes plots.
  * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>.
  */
 public abstract class Plot {
@@ -47,6 +47,12 @@ public abstract class Plot {
      */
     private String distributionName;
 
+    /**
+     * Initializes the chart and theoretical and real series
+     *
+     * @param atoms reference to a list of atoms
+     * @param distributionName name of theoretical distribution
+     */
     Plot(List<Atom> atoms, String distributionName) {
         this.atoms = atoms;
         this.distributionName = distributionName;
