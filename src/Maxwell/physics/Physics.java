@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.lang.Float.NaN;
 
-
-@SuppressWarnings("SameParameterValue")
 public class Physics {
 
     private final int HEIGHT;
@@ -116,7 +113,6 @@ public class Physics {
                     }
                 }
             }
-
         }
     }
     
@@ -132,11 +128,17 @@ public class Physics {
 
     
     private void processCollision(Atom atom1, Atom atom2) {
-        double dx =atom1.x - atom2.x;
-        double dy =atom1.y - atom2.y;
+        double dx = atom1.x - atom2.x;
+        double dy = atom1.y - atom2.y;
         double lenSqr = dx * dx + dy * dy;
 
         if (lenSqr < D * D) {
+
+            if (lenSqr == 0) {
+//                System.out.println("lenSqr is null");
+                return; // Running away from your problems
+            }
+
             double alpha1 = (atom1.vx * dx + atom1.vy * dy) / (lenSqr);
             double alpha2 = (atom2.vx * dx + atom2.vy * dy) / (lenSqr);
             double p1x = alpha1 * dx;
@@ -144,13 +146,13 @@ public class Physics {
             double p2x = alpha2 * dx;
             double p2y = alpha2 * dy;
 
-           atom1.vx = atom1.vx - p1x + p2x;
-           atom1.vy = atom1.vy - p1y + p2y;
+            atom1.vx = atom1.vx - p1x + p2x;
+            atom1.vy = atom1.vy - p1y + p2y;
             atom2.vx = atom2.vx - p2x + p1x;
             atom2.vy = atom2.vy - p2y + p1y;
 
-           atom1.x = atom2.x + dx * D / Math.sqrt(lenSqr);
-           atom1.y = atom2.y + dy * D / Math.sqrt(lenSqr);
+            atom1.x = atom2.x + dx * D / Math.sqrt(lenSqr);
+            atom1.y = atom2.y + dy * D / Math.sqrt(lenSqr);
         }
     }
 }

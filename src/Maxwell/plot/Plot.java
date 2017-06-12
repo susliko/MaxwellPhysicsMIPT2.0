@@ -1,78 +1,81 @@
 package Maxwell.plot;
 
 import Maxwell.physics.Atom;
-import org.knowm.xchart.*;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 import javax.swing.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Class used for building plots
- * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>
+ * Class used for building plots.
+ * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>.
  */
-public class Plot {
-    private final List<Atom> atoms;
-    private final SwingWrapper<XYChart> swingWrapper;
-
-    private final int numberOfBars;
-    private int resolution;
-
-    private XYChart xyChart;
-
-    private double mkt2;
-    private double maxwellConstant;
+public abstract class Plot {
+    /**
+     * Reference to a list of atoms.
+     */
+    List<Atom> atoms;
 
     /**
-     * Plot class constructor.
-     * Builds Maxwell distribution, reserves data series for real distribution,
-     * constructs plot frame
-     *
-     * @param atomsArray array with information about atoms {@link Atom}
+     * Plot frame.
      */
-    public Plot(List<Atom> atomsArray) {
-        atoms = atomsArray;
+    private SwingWrapper<XYChart> swingWrapper;
 
-        numberOfBars = 20;
-        resolution = 45;
+    /**
+     * Number of histogram bars.
+     */
+    int numberOfBars;
 
-        double m = 6.6e-27;
-        double k = 1.34e-23;
-        double t = 300;
-        mkt2 = m / (2 * k * t);
-        maxwellConstant = 4*Math.PI*Math.pow(mkt2 / Math.PI, 1.5);
+    /**
+     * Range of histogram bar.
+     */
+    int resolution;
 
+    /**
+     * XChart object for building plot.
+     */
+    XYChart xyChart;
+
+    /**
+     * Name of theoretical distribution
+     */
+    private String distributionName;
+
+    Plot(List<Atom> atoms, String distributionName) {
+        this.atoms = atoms;
+        this.distributionName = distributionName;
 
         xyChart = (new XYChartBuilder()).width(600).height(600).title("Experiment results").build();
-        xyChart.setXAxisTitle("Velocity, m/s");
-        xyChart.setYAxisTitle("Probability");
         xyChart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         xyChart.getStyler().setDecimalPattern("#,###.##");
 
         ArrayList<Double> emptyY = new ArrayList<>(1);
         emptyY.add(0.0);
-        XYSeries maxwell = xyChart.addSeries("Maxwell Distribution", null, emptyY);
-        maxwell.setMarker(SeriesMarkers.NONE);
-        updateMaxwellDistribution();
+        XYSeries theoretical = xyChart.addSeries(distributionName, null, emptyY);
+        theoretical.setMarker(SeriesMarkers.NONE);
 
         XYSeries real = xyChart.addSeries("Real Distribution", null, emptyY);
         real.setMarker(SeriesMarkers.NONE);
         real.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
-        updateRealDistribution();
 
         swingWrapper = new SwingWrapper<>(xyChart);
-    }
-
-
-
-    /**
-     *  Sets the chart visible
-     */
-    public void display() {
         swingWrapper.displayChart();
+
     }
 
+
+
+//    /**
+//     *  Sets the chart visible
+//     */
+//    public void display() {
+//    }
 
 
     /**
@@ -83,54 +86,30 @@ public class Plot {
         SwingUtilities.invokeLater(swingWrapper::repaintChart);
     }
 
+    abstract double distribution(double x);
 
 
     /**
-     * Updates Maxwell distribution series
+     * Updates distribution series.
+     *
+     * @see Plot#distribution(double)
      */
-    private void updateMaxwellDistribution(){
+    void updateDistribution(){
         ArrayList<Double> maxwellDistributionX = new ArrayList<>();
         ArrayList<Double> maxwellDistributionY = new ArrayList<>();
-        for (int i = 0; i < numberOfBars * 2; i++) {
-            double v = i * resolution / 2;
-            maxwellDistributionX.add(v);
-            maxwellDistributionY.add(resolution * maxwellConstant * v*v * Math.exp(-mkt2 * v*v));
-        }
-        xyChart.updateXYSeries("Maxwell Distribution",
-                               maxwellDistributionX,
-                               maxwellDistributionY,
-                               null);
-    }
-
-    /**
-     * Updated real distribution series
-     *
-     * @see Atom
-     */
-    private void updateRealDistribution() {
-        ArrayList<Integer> realDistribution = new ArrayList<>(numberOfBars);
-        for (int i = 0; i < numberOfBars; i++)
-            realDistribution.add(i, 0);
-        for (Atom atom : atoms) {
-            int barIndex = (int)(Math.sqrt(atom.vx * atom.vx + atom.vy * atom.vy) - 1) / resolution;
-            if (barIndex >= numberOfBars) {
-//                break;
-                resolution *= 1.5;
-                updateMaxwellDistribution();
-                updateRealDistribution();
-                return;
-            }
-            realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
-        }
-
-        ArrayList<Double> xData = new ArrayList<>();
-        ArrayList<Double> yData = new ArrayList<>();
+        maxwellDistributionX.add(0.0);
+        maxwellDistributionY.add(resolution * distribution(0.0));
         for (int i = 0; i < numberOfBars; i++) {
-            xData.add((double)i * resolution);
-            xData.add((double)(i + 1) * resolution);
-            yData.add((double)realDistribution.get(i) / atoms.size());
-            yData.add((double)realDistribution.get(i) / atoms.size());
+            double currV = i * resolution;
+            double nextV = (i + 1) * resolution;
+            maxwellDistributionX.add(currV + resolution / 2);
+            maxwellDistributionY.add(resolution * (distribution(currV) + distribution(nextV)) / 2);
         }
-        xyChart.updateXYSeries("Real Distribution", xData, yData, null);
+        xyChart.updateXYSeries(distributionName,
+                maxwellDistributionX,
+                maxwellDistributionY,
+                null);
     }
+
+    abstract void updateRealDistribution();
 }

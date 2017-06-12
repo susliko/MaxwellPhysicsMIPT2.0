@@ -15,10 +15,10 @@ import java.util.Random;
 
 public class Master {
 
-    public static final int HEIGHT = 1080;
-    public static final int WIDTH  = 1920;
-    public static final int D = 4;
-    private static final int numberOfAtoms = 5000;
+    public static final int HEIGHT = 700;
+    public static final int WIDTH  = 700;
+    public static final int D = 5;
+    private static final int numberOfAtoms = 1000;
 
     private final List<Atom> atoms = new ArrayList<>();
 
