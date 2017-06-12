@@ -1,8 +1,9 @@
 package Maxwell.frames;
 
+import Maxwell.ExpType;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
@@ -23,70 +24,123 @@ public class Dialog extends JFrame {
 
 
 
+    public void setListener(ActionListener listener) {
+        pane.setListener(listener);
+    }
+
+
+
     public int getVelocity() {
-        while (!pane.gotcha) {
-            System.out.print("");
-        }
-        return pane.velocity;
+        return pane.getVelocity();
+    }
+
+
+
+    public int getN() {
+        return pane.getN();
+    }
+
+
+
+    public ExpType getExperiment() {
+        return pane.getExperiment();
     }
 }
 
 
-class DialogPane extends JPanel
-                 implements ActionListener {
 
-    final int HEIGHT = 200;
+class DialogPane extends JPanel {
+
+    final int HEIGHT = 300;
     final int WIDTH = 400;
 
-    private JFormattedTextField field;
+    private JLabel velocityLabel;
+    private JLabel numberLabel;
+    private JFormattedTextField velocityField;
+    private JFormattedTextField numberField;
+    private JButton button;
+
     int velocity;
-    boolean gotcha = false;
+    int N;
+    ExpType experiment;
+
+
+    int getVelocity() {
+        try {
+            velocity = Integer.parseInt(velocityField.getText().replace(",", ""));
+        } catch (NumberFormatException ignored) { return 0; }
+        return velocity;
+    }
+
+
+
+    int getN() {
+        try {
+            N = Integer.parseInt(numberField.getText().replace(",", ""));
+        } catch (NumberFormatException ignored) { return 0; }
+        return N;
+    }
+
+
+
+    ExpType getExperiment() {
+        return experiment;
+    }
+
+
+
+    void setListener(ActionListener listener) {
+        button.setActionCommand("run");
+        button.addActionListener(listener);
+    }
+
 
     DialogPane() {
         setBackground(Color.black);
 
+        velocityLabel = new JLabel("Enter velocity");
+        velocityLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        velocityLabel.setBackground(Color.BLACK);
+        velocityLabel.setForeground(Color.white);
+        velocityLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        velocityLabel.setOpaque(true);
 
-        field = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        field.setPreferredSize(new Dimension(100, 50));
-        field.setFont(new Font("Arial", Font.BOLD, 20));
-        field.setHorizontalAlignment(SwingConstants.CENTER);
-        field.setActionCommand("run");
-        field.addActionListener(this);
+        numberLabel = new JLabel("Enter number of atoms");
+        numberLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        numberLabel.setBackground(Color.BLACK);
+        numberLabel.setForeground(Color.white);
+        numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        numberLabel.setOpaque(true);
+        
+        velocityField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        velocityField.setPreferredSize(new Dimension(100, 50));
+        velocityField.setFont(new Font("Arial", Font.BOLD, 20));
+        velocityField.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        numberField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        numberField.setPreferredSize(new Dimension(100, 50));
+        numberField.setFont(new Font("Arial", Font.BOLD, 20));
+        numberField.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel label = new JLabel("Enter velocity");
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-        label.setBackground(Color.BLACK);
-        label.setForeground(Color.white);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setOpaque(true);
-
-        JButton button = new JButton("Start!");
+        button = new JButton("Start!");
         button.setAlignmentX(CENTER_ALIGNMENT);
+        button.setBorderPainted(false);
         button.setFont(new Font("Arial", Font.BOLD, 20));
-        button.setActionCommand("run");
-        button.addActionListener(this);
 
         JPanel fieldPane = new JPanel(new GridLayout(0,1));
 
-        fieldPane.add(label);
-        fieldPane.add(field);
+        fieldPane.add(velocityLabel);
+        fieldPane.add(velocityField);
+        fieldPane.add(numberLabel);
+        fieldPane.add(numberField);
         fieldPane.add(button);
         add(fieldPane, BorderLayout.CENTER);
     }
 
+
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(WIDTH, HEIGHT);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        String cmd = actionEvent.getActionCommand();
-
-        if (cmd.equals("run")) {
-            System.out.println(field.getText());
-            gotcha = true;
-            velocity = Integer.parseInt(field.getText());
-        }
     }
 }

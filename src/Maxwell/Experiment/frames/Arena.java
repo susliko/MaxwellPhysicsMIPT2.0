@@ -12,7 +12,7 @@ public class Arena extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public void setAtoms(Drawer drawer) {
+    public void setAtoms(JPanel drawer) {
         getContentPane().add(drawer);
     }
 }
