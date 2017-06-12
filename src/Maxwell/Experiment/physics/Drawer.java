@@ -1,5 +1,7 @@
-package Maxwell.physics;
+package Maxwell.Experiment.physics;
 
+
+import Maxwell.Experiment.Experiment;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,10 +17,10 @@ public class Drawer extends JPanel {
     private final List<Atom> atoms;
 
     public Drawer(List<Atom> atoms) {
-        this.HEIGHT = Maxwell.Master.HEIGHT;
-        this.WIDTH = Maxwell.Master.WIDTH;
+        this.HEIGHT = Experiment.HEIGHT;
+        this.WIDTH = Experiment.WIDTH;
         this.atoms = atoms;
-        this.D = Maxwell.Master.D;
+        this.D = Experiment.D;
     }
 
 

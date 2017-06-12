@@ -1,4 +1,4 @@
-package Maxwell.physics;
+package Maxwell.Experiment.physics;
 
 public class Atom {
 

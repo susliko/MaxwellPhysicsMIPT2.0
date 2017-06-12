@@ -1,8 +1,8 @@
-package Maxwell.physics;
+package Maxwell.Experiment.physics;
 
+import Maxwell.Experiment.Experiment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -20,10 +20,10 @@ public class Physics {
 
 
     public Physics(List<Atom> atoms) {
-        this.HEIGHT = Maxwell.Master.HEIGHT;
-        this.WIDTH = Maxwell.Master.WIDTH;
+        this.HEIGHT = Experiment.HEIGHT;
+        this.WIDTH = Experiment.WIDTH;
         this.atoms = atoms;
-        this.D = Maxwell.Master.D;
+        this.D = Experiment.D;
         this.gridHeight  = this.HEIGHT / D;
         this.gridWidth = this.WIDTH / D;
         this.grid = (ArrayList<Atom>[])new ArrayList[gridWidth * gridHeight];
@@ -31,17 +31,10 @@ public class Physics {
 
 
 
-    public void addAtom(double x, double y, double vx, double vy) {
-        Atom atom = new Atom(x, y, vx, vy);
-        atoms.add(atom);
-    }
-
-
-
     public void update(int dt) {
 
         for (Atom atom : atoms) {
-//            atom.vy += 10;
+            atom.vy += 10;
             atom.x += atom.vx * dt / 1000;
             atom.y += atom.vy * dt / 1000;
             processBorderCollisions(atom);

@@ -1,6 +1,6 @@
-package Maxwell.plot;
+package Maxwell.Experiment.plot;
 
-import Maxwell.physics.Atom;
+import Maxwell.Experiment.physics.Atom;
 
 import java.util.*;
 
