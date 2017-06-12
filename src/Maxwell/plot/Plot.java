@@ -72,8 +72,21 @@ public abstract class Plot {
 
         swingWrapper = new SwingWrapper<>(xyChart);
         swingWrapper.displayChart();
+
     }
 
+
+
+//    /**
+//     *  Sets the chart visible
+//     */
+//    public void display() {
+//    }
+
+
+    /**
+     * Updates and redraws the frame
+     */
     public void render() {
         updateRealDistribution();
         SwingUtilities.invokeLater(swingWrapper::repaintChart);
