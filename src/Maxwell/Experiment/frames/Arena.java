@@ -1,7 +1,6 @@
 package Maxwell.Experiment.frames;
 
 import javax.swing.*;
-import Maxwell.Experiment.physics.Drawer;
 
 
 public class Arena extends JFrame {

@@ -3,15 +3,13 @@ package Maxwell;
 import Maxwell.Experiment.Experiment;
 import Maxwell.frames.Dialog;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 
 public class Master implements ActionListener {
+
+    private final Experiment experiment = new Experiment();
 
     private final Dialog dialog = new Dialog();
 
@@ -27,18 +25,18 @@ public class Master implements ActionListener {
         String cmd = actionEvent.getActionCommand();
 
         if (cmd.equals("stop")) {
-//            experiments.stop;
+            experiment.stop();
             dialog.setVisible(true);
         }
         if (cmd.equals("run")) {
             System.out.println(dialog.getVelocity());
             System.out.println(dialog.getN());
-//            dialog.setVisible(false);
-//            ExpType exp = dialog.getExperiment();
-//            int velocity = dialog.getVelocity();
-//            int N = dialog.getN();
-//            experiments.run(exp, velocity, N);
+            dialog.setVisible(false);
+            ExpType exp = dialog.getExperiment();
+            int velocity = dialog.getVelocity();
+            int N = dialog.getN();
+            Thread thread = new Thread(() -> experiment.start(exp, velocity, N));
+            thread.start();
         }
-
     }
 }

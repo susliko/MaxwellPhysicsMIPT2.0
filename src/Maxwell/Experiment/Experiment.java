@@ -1,5 +1,6 @@
 package Maxwell.Experiment;
 
+import Maxwell.ExpType;
 import Maxwell.Experiment.frames.Arena;
 import Maxwell.Experiment.physics.Atom;
 import Maxwell.Experiment.physics.Drawer;
@@ -19,7 +20,7 @@ public class Experiment {
 
     private boolean active = false;
 
-    public void start(/*ExpType expType,*/ int velocity, int numberOfAtoms) {
+    public void start(ExpType expType, int velocity, int numberOfAtoms) {
         active = true;
 
         int gasTPF = 40;
