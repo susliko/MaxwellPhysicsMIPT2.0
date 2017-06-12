@@ -1,13 +1,16 @@
-package Maxwell.plot;
+package Maxwell.Experiment.plot;
 
-import Maxwell.physics.Atom;
+import Maxwell.Experiment.physics.Atom;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Processes Bolzman distribution series
+ */
 public class PlotBolzman extends Plot{
     /**
-     * Bolzman Distribution parameter. m / kT.
+     * Bolzman distribution parameter. m / kT.
      */
     private double a;
 
@@ -22,9 +25,7 @@ public class PlotBolzman extends Plot{
     private int n0 = 0;
 
     /**
-     * PlotMaxwell class constructor.
-     * Builds Maxwell distribution, reserves data series for real distribution,
-     * constructs plot frame.
+     * Sets distribution parameters and draws plot.
      *
      * @param atoms array with information about atoms.
      * @param avgV average value of velocity.
@@ -63,7 +64,7 @@ public class PlotBolzman extends Plot{
 
 
     /**
-     * Updated real distribution series.
+     * Updates real distribution series.
      *
      * @see Atom
      */

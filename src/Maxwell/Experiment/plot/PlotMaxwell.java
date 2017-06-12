@@ -1,9 +1,12 @@
-package Maxwell.plot;
+package Maxwell.Experiment.plot;
 
-import Maxwell.physics.Atom;
+import Maxwell.Experiment.physics.Atom;
 
 import java.util.*;
 
+/**
+ * Processes Maxwell distribution series
+ */
 public class PlotMaxwell extends Plot{
     /**
      * Maxwell Distribution parameter. 4PI*(m / (2ktPI)) ^ (3/2).
@@ -28,7 +31,7 @@ public class PlotMaxwell extends Plot{
         super(atoms, "Maxwell distribution");
         this.atoms = atoms;
 
-        numberOfBars = 20;
+        numberOfBars = 50;
         resolution = 3 * (int)avgV / numberOfBars;
 
         b = 4 / (Math.PI * avgV * avgV);
@@ -39,7 +42,7 @@ public class PlotMaxwell extends Plot{
 
         xyChart.setXAxisTitle("Velocity, m/s");
         xyChart.setYAxisTitle("Probability");
-        xyChart.getStyler().setYAxisMax(0.25);
+        xyChart.getStyler().setYAxisMax(1.5 * resolution * distribution(avgV));
         render();
     }
 
@@ -58,7 +61,7 @@ public class PlotMaxwell extends Plot{
 
 
     /**
-     * Updated real distribution series.
+     * Updates real distribution series.
      *
      * @see Atom
      */

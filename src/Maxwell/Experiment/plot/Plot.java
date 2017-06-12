@@ -1,6 +1,6 @@
-package Maxwell.plot;
+package Maxwell.Experiment.plot;
 
-import Maxwell.physics.Atom;
+import Maxwell.Experiment.physics.Atom;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class used for building plots.
+ * Processes plots.
  * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>.
  */
 public abstract class Plot {
@@ -23,7 +23,7 @@ public abstract class Plot {
     List<Atom> atoms;
 
     /**
-     * Plot frame.
+     * Swing chart panel
      */
     private SwingWrapper<XYChart> swingWrapper;
 
@@ -47,6 +47,18 @@ public abstract class Plot {
      */
     private String distributionName;
 
+    /**
+     * Plot JFrame
+     */
+    private JFrame plotFrame;
+
+
+    /**
+     * Initializes the chart and theoretical and real series
+     *
+     * @param atoms reference to a list of atoms
+     * @param distributionName name of theoretical distribution
+     */
     Plot(List<Atom> atoms, String distributionName) {
         this.atoms = atoms;
         this.distributionName = distributionName;
@@ -65,17 +77,16 @@ public abstract class Plot {
         real.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
 
         swingWrapper = new SwingWrapper<>(xyChart);
-        swingWrapper.displayChart();
-
+        plotFrame = swingWrapper.displayChart();
     }
 
 
-
-//    /**
-//     *  Sets the chart visible
-//     */
-//    public void display() {
-//    }
+    /**
+     *  Hides chart frame
+     */
+    public void dispose() {
+        plotFrame.dispose();
+    }
 
 
     /**
@@ -85,6 +96,7 @@ public abstract class Plot {
         updateRealDistribution();
         SwingUtilities.invokeLater(swingWrapper::repaintChart);
     }
+
 
     abstract double distribution(double x);
 
@@ -110,6 +122,7 @@ public abstract class Plot {
                 maxwellDistributionY,
                 null);
     }
+
 
     abstract void updateRealDistribution();
 }
