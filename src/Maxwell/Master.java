@@ -8,12 +8,15 @@ import Maxwell.physics.Physics;
 import Maxwell.plot.Plot;
 import Maxwell.plot.PlotMaxwell;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
-public class Master {
+public class Master implements ActionListener {
 
     public static final int HEIGHT = 700;
     public static final int WIDTH  = 700;
@@ -22,7 +25,7 @@ public class Master {
 
     private final List<Atom> atoms = new ArrayList<>();
 
-    private final Drawer drawer = new Drawer(atoms);
+    private final JPanel drawer = new Drawer(atoms);
     private final Physics physics  = new Physics(atoms);
     private final Arena arena = new Arena();
     private final Dialog dialog = new Dialog();
@@ -47,39 +50,29 @@ public class Master {
         int gasTPF = 40;
         int plotTPF = 1000;
 
+        dialog.setListener(this);
         dialog.setVisible(true);
-        int velocity = dialog.getVelocity();
-        dialog.dispose();
-        generateAtoms(velocity);
-
-//        plotMaxwell.display();
-        arena.setVisible(true);
-        arena.setAtoms(drawer);
-
-        double sinceGasUpdate = 0;
-        double sincePlotUpdate = 0;
-        double gasTimer = System.currentTimeMillis();
-        double plotTimer = System.currentTimeMillis();
+    }
 
 
-        while (true) {
-            sinceGasUpdate += System.currentTimeMillis() - gasTimer;
-            sincePlotUpdate += System.currentTimeMillis() - plotTimer;
-            gasTimer  = System.currentTimeMillis();
-            plotTimer = System.currentTimeMillis();
 
-            while (sinceGasUpdate > gasTPF) {
-                physics.update(gasTPF);
-                sinceGasUpdate -= gasTPF;
-            }
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        String cmd = actionEvent.getActionCommand();
 
-            if (sincePlotUpdate > plotTPF) {
-                plotMaxwell.render();
-                sincePlotUpdate = 0;
-            }
-
-            arena.pack();
-            arena.repaint();
+        if (cmd.equals("stop")) {
+//            experiments.stop;
+            dialog.setVisible(true);
         }
+        if (cmd.equals("run")) {
+            System.out.println(dialog.getVelocity());
+            System.out.println(dialog.getN());
+//            dialog.setVisible(false);
+//            ExpType exp = dialog.getExperiment();
+//            int velocity = dialog.getVelocity();
+//            int N = dialog.getN();
+//            experiments.run(exp, velocity, N);
+        }
+
     }
 }
