@@ -51,18 +51,74 @@ public class Dialog extends JFrame {
 
 class DialogPane extends JPanel {
 
-    final int HEIGHT = 300;
+    final int HEIGHT = 400;
     final int WIDTH = 400;
+
+    private final String[] experiments = { "Maxwell", "Boltzmann", "Knudsen" };
 
     private JLabel velocityLabel;
     private JLabel numberLabel;
     private JFormattedTextField velocityField;
     private JFormattedTextField numberField;
     private JButton button;
+    private JComboBox experimentField;
 
     int velocity;
     int N;
+
+
+
+    DialogPane() {
+        setBackground(Color.black);
+
+        experimentField = new JComboBox(experiments);
+        experimentField.setFont(new Font("Arial", Font.BOLD, 20));
+        ((JLabel)experimentField.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
+        velocityLabel = new JLabel("Enter velocity");
+        velocityLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        velocityLabel.setBackground(Color.BLACK);
+        velocityLabel.setForeground(Color.white);
+        velocityLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        velocityLabel.setOpaque(true);
+
+        numberLabel = new JLabel("Enter number of atoms");
+        numberLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        numberLabel.setBackground(Color.BLACK);
+        numberLabel.setForeground(Color.white);
+        numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        numberLabel.setOpaque(true);
+
+        velocityField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        velocityField.setPreferredSize(new Dimension(100, 50));
+        velocityField.setFont(new Font("Arial", Font.BOLD, 20));
+        velocityField.setHorizontalAlignment(SwingConstants.CENTER);
+
+        numberField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        numberField.setPreferredSize(new Dimension(100, 50));
+        numberField.setFont(new Font("Arial", Font.BOLD, 20));
+        numberField.setHorizontalAlignment(SwingConstants.CENTER);
+
+        button = new JButton("Start!");
+        button.setAlignmentX(CENTER_ALIGNMENT);
+        button.setBorderPainted(false);
+        button.setFont(new Font("Arial", Font.BOLD, 20));
+
+        JPanel fieldPane = new JPanel(new GridLayout(0,1));
+
+        fieldPane.add(experimentField);
+        fieldPane.add(velocityLabel);
+        fieldPane.add(velocityField);
+        fieldPane.add(numberLabel);
+        fieldPane.add(numberField);
+        fieldPane.add(button);
+        add(fieldPane, BorderLayout.CENTER);
+        setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
+    }
+
+
     ExpType experiment;
+
 
 
     int getVelocity() {
@@ -88,53 +144,11 @@ class DialogPane extends JPanel {
     }
 
 
-
     void setListener(ActionListener listener) {
         button.setActionCommand("run");
+        numberField.setActionCommand("run");
         button.addActionListener(listener);
-    }
-
-
-    DialogPane() {
-        setBackground(Color.black);
-
-        velocityLabel = new JLabel("Enter velocity");
-        velocityLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        velocityLabel.setBackground(Color.BLACK);
-        velocityLabel.setForeground(Color.white);
-        velocityLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        velocityLabel.setOpaque(true);
-
-        numberLabel = new JLabel("Enter number of atoms");
-        numberLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        numberLabel.setBackground(Color.BLACK);
-        numberLabel.setForeground(Color.white);
-        numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        numberLabel.setOpaque(true);
-        
-        velocityField = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        velocityField.setPreferredSize(new Dimension(100, 50));
-        velocityField.setFont(new Font("Arial", Font.BOLD, 20));
-        velocityField.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        numberField = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        numberField.setPreferredSize(new Dimension(100, 50));
-        numberField.setFont(new Font("Arial", Font.BOLD, 20));
-        numberField.setHorizontalAlignment(SwingConstants.CENTER);
-
-        button = new JButton("Start!");
-        button.setAlignmentX(CENTER_ALIGNMENT);
-        button.setBorderPainted(false);
-        button.setFont(new Font("Arial", Font.BOLD, 20));
-
-        JPanel fieldPane = new JPanel(new GridLayout(0,1));
-
-        fieldPane.add(velocityLabel);
-        fieldPane.add(velocityField);
-        fieldPane.add(numberLabel);
-        fieldPane.add(numberField);
-        fieldPane.add(button);
-        add(fieldPane, BorderLayout.CENTER);
+        numberField.addActionListener(listener);
     }
 
 

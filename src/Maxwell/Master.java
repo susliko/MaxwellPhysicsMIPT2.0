@@ -47,9 +47,6 @@ public class Master implements ActionListener {
 
 
     public void run() {
-        int gasTPF = 40;
-        int plotTPF = 1000;
-
         dialog.setListener(this);
         dialog.setVisible(true);
     }
