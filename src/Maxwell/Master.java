@@ -30,7 +30,7 @@ public class Master implements ActionListener {
         }
         if (cmd.equals("run")) {
             dialog.setVisible(false);
-//           final ExpType exp = dialog.getExperiment();
+//            ExpType exp = dialog.getExperiment();
             ExpType exp = ExpType.BOLTZMANN; // TODO
             int velocity = dialog.getVelocity();
             int N = dialog.getN();
