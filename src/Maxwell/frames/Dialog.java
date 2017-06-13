@@ -140,6 +140,18 @@ class DialogPane extends JPanel {
 
 
     ExpType getExperiment() {
+        String exp = experimentField.getSelectedItem().toString();
+        switch (exp) {
+            case "Maxwell" :
+                experiment = ExpType.MAXWELL;
+                break;
+            case "Boltzmann" :
+                experiment = ExpType.BOLTZMANN;
+                break;
+            case "Knudsen" :
+                experiment = ExpType.KNUDSEN;
+                break;
+        }
         return experiment;
     }
 

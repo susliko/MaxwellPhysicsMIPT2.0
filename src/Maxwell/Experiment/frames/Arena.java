@@ -1,6 +1,7 @@
 package Maxwell.Experiment.frames;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 public class Arena extends JFrame {
@@ -12,6 +13,6 @@ public class Arena extends JFrame {
     }
 
     public void setAtoms(JPanel drawer) {
-        getContentPane().add(drawer);
+        add(drawer);
     }
 }

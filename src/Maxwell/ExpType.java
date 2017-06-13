@@ -1,7 +1,12 @@
 package Maxwell;
 
 public enum ExpType {
-    MAXWELL,
+    MAXWELL {
+        @Override
+        public String toString() {
+            return "MAXWELL";
+        }
+    },
     BOLTZMANN,
     KNUDSEN;
 

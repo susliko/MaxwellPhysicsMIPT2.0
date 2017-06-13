@@ -9,11 +9,13 @@ import Maxwell.Experiment.plot.Plot;
 import Maxwell.Experiment.plot.PlotBolzman;
 import Maxwell.Experiment.plot.PlotMaxwell;
 
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Experiment {
+
     public static final int HEIGHT = 700;
     public static final int WIDTH  = 700;
     public static final int D = 5;
