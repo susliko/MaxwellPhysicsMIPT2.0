@@ -28,12 +28,10 @@ public class Master implements ActionListener {
             experiment.stop();
             dialog.setVisible(true);
         }
-
         if (cmd.equals("run")) {
-            System.out.println(dialog.getVelocity());
-            System.out.println(dialog.getN());
             dialog.setVisible(false);
-            ExpType exp = dialog.getExperiment();
+//            ExpType exp = dialog.getExperiment();
+            ExpType exp = ExpType.BOLTZMANN; // TODO
             int velocity = dialog.getVelocity();
             int N = dialog.getN();
             Thread thread = new Thread(() -> experiment.start(exp, velocity, N));
