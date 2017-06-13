@@ -18,6 +18,18 @@ public class Physics {
     private final int gridWidth;
     private final ArrayList<Atom>[] grid;
 
+    private final AtomProcessor atomProcessor;
+
+    public Physics(List<Atom> atoms, AtomProcessor atomProcessor) {
+        this.HEIGHT = Experiment.HEIGHT;
+        this.WIDTH = Experiment.WIDTH;
+        this.atoms = atoms;
+        this.D = Experiment.D;
+        this.gridHeight  = this.HEIGHT / D;
+        this.gridWidth = this.WIDTH / D;
+        this.grid = (ArrayList<Atom>[])new ArrayList[gridWidth * gridHeight];
+        this.atomProcessor = atomProcessor;
+    }
 
     public Physics(List<Atom> atoms) {
         this.HEIGHT = Experiment.HEIGHT;
@@ -27,17 +39,21 @@ public class Physics {
         this.gridHeight  = this.HEIGHT / D;
         this.gridWidth = this.WIDTH / D;
         this.grid = (ArrayList<Atom>[])new ArrayList[gridWidth * gridHeight];
+        this.atomProcessor = null;
     }
 
 
 
     public void update(int dt) {
+        if (atomProcessor != null)
+            atomProcessor.processAtoms(atoms);
 
         for (Atom atom : atoms) {
             atom.x += atom.vx * dt / 1000;
             atom.y += atom.vy * dt / 1000;
             processBorderCollisions(atom);
         }
+
 
         for (ArrayList<Atom> particles : grid) {
             if (particles != null)

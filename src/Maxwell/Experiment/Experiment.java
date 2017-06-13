@@ -20,6 +20,8 @@ public class Experiment {
     public static final int WIDTH  = 700;
     public static final int D = 5;
 
+    private static final double boltzmannAcceleration = 1;
+
     private boolean active = false;
 
     public void start(ExpType expType, int velocity, int numberOfAtoms) {
@@ -30,9 +32,35 @@ public class Experiment {
 
         final List<Atom> atoms = new ArrayList<>();
         final Drawer drawer = new Drawer(atoms);
-        final Physics physics  = new Physics(atoms);
         final Arena arena = new Arena();
-        final Plot plot = new PlotMaxwell(atoms, velocity);
+        final Physics physics;
+        final Plot plot ;
+
+        switch (expType) {
+            case MAXWELL:
+                plot = new PlotMaxwell(atoms, velocity);
+                physics = new Physics(atoms);
+                break;
+            case BOLTZMANN:
+                plot = new PlotBolzman(atoms, velocity, boltzmannAcceleration * gasTPF, HEIGHT);
+                physics = new Physics(atoms, atoms1 -> {
+                    for (Atom atom : atoms1) {
+                        atom.vy += gasTPF * boltzmannAcceleration;
+                    }
+                });
+                break;
+            case KNUDSEN:
+                plot = null;
+                physics = null;
+                break;
+            default:
+                plot = null;
+                physics = null;
+                break;
+        }
+
+        if (plot == null)
+            return;
 
         generateAtoms(atoms, velocity, numberOfAtoms);
 
@@ -43,7 +71,6 @@ public class Experiment {
         double sincePlotUpdate = 0;
         double gasTimer = System.currentTimeMillis();
         double plotTimer = System.currentTimeMillis();
-
 
         while (active) {
             sinceGasUpdate += System.currentTimeMillis() - gasTimer;
