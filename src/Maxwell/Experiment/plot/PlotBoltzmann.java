@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Processes Bolzman distribution series
  */
-public class PlotBolzman extends Plot{
+public class PlotBoltzmann extends DistributionPlot {
     /**
      * Bolzman distribution parameter. m / kT.
      */
@@ -20,6 +20,11 @@ public class PlotBolzman extends Plot{
     private final int height;
 
     /**
+     * Gravitational acceleration
+     */
+    private final double acceleration;
+
+    /**
      * Bolzman distribution parameter. n0.
      */
     private int n0 = 0;
@@ -28,25 +33,21 @@ public class PlotBolzman extends Plot{
      * Sets distribution parameters and draws plot.
      *
      * @param atoms array with information about atoms.
-     * @param avgV average value of velocity.
      * @param acceleration acceleration in force field
      * @param height height of arena.
      */
-    public PlotBolzman(List<Atom> atoms, double avgV, double acceleration, int height) {
-        super(atoms, "Bolzman distribution");
+    public PlotBoltzmann(List<Atom> atoms, double acceleration, int height) {
+        super(atoms, "Распределение Больцмана");
         this.height = height;
+        this.acceleration = acceleration;
 
-        numberOfBars = 20;
+        numberOfBars = 25;
         resolution = height / numberOfBars;
 
-        a = 8 * acceleration / (avgV * avgV * Math.PI);
-        n0 = atoms.size() / numberOfBars;
+        a = 2 * acceleration / meanSquareSpeed();
 
-        updateDistribution();
-        updateRealDistribution();
-
-        xyChart.setXAxisTitle("Height, m");
-        xyChart.setYAxisTitle("Concentration * dV");
+        xyChart.setXAxisTitle("Высота, пикс");
+        xyChart.setYAxisTitle("Концентрация * dV");
         render();
     }
 
@@ -63,6 +64,22 @@ public class PlotBolzman extends Plot{
     }
 
 
+    @Override
+    void updateDistribution() {
+        ArrayList<Double> distributionX = new ArrayList<>();
+        ArrayList<Double> distributionY = new ArrayList<>();
+        for (int i = 0; i < numberOfBars; i++) {
+            double currY = i * resolution;
+            distributionX.add(currY + resolution / 2);
+            distributionY.add(distribution(currY) * resolution);
+        }
+        xyChart.updateXYSeries(distributionName,
+                distributionX,
+                distributionY,
+                null);
+    }
+
+
     /**
      * Updates real distribution series.
      *
@@ -74,11 +91,13 @@ public class PlotBolzman extends Plot{
         for (int i = 0; i < numberOfBars; i++)
             realDistribution.add(i, 0);
         for (Atom atom : atoms) {
-            int barIndex = (height - (int)atom.y) / resolution;
-            if (barIndex >= numberOfBars)
+            int barIndex = (int)Math.floor((height - atom.y) / resolution);
+            if (barIndex < 0 || barIndex >= numberOfBars)
                 continue;
             realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
         }
+
+        a = 2 * acceleration / meanSquareSpeed();
 
         ArrayList<Double> xData = new ArrayList<>();
         ArrayList<Double> yData = new ArrayList<>();
@@ -88,8 +107,8 @@ public class PlotBolzman extends Plot{
             yData.add((double)realDistribution.get(i));
             yData.add((double)realDistribution.get(i));
         }
-        n0 = (int)(Math.exp(3 * a * resolution / 2) * realDistribution.get(1) / resolution);
+        n0 = (int)(realDistribution.get(0) / resolution);
         updateDistribution();
-        xyChart.updateXYSeries("Real Distribution", xData, yData, null);
+        xyChart.updateXYSeries("Экспериментальное распределние", xData, yData, null);
     }
 }

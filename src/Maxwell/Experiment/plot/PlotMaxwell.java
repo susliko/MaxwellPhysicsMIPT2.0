@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Processes Maxwell distribution series
  */
-public class PlotMaxwell extends Plot{
+public class PlotMaxwell extends DistributionPlot {
     /**
      * Maxwell Distribution parameter. 4PI*(m / (2ktPI)) ^ (3/2).
      */
@@ -18,31 +18,29 @@ public class PlotMaxwell extends Plot{
      */
     private double b;
 
-
     /**
      * PlotMaxwell class constructor.
      * Builds Maxwell distribution, reserves data series for real distribution,
      * constructs plot frame.
      *
      * @param atoms array with information about atoms.
-     * @param avgV average value of velocity.
      */
-    public PlotMaxwell(List<Atom> atoms, double avgV) {
-        super(atoms, "Maxwell distribution");
+    public PlotMaxwell(List<Atom> atoms) {
+        super(atoms, "Распределение Максвелла");
         this.atoms = atoms;
 
-        numberOfBars = 50;
-        resolution = 3 * (int)avgV / numberOfBars;
-
-        b = 4 / (Math.PI * avgV * avgV);
-        a = 4 * Math.PI * Math.pow(b / Math.PI, 1.5);
-
+        numberOfBars = 25;
+        double mss = meanSquareSpeed();
+        resolution = 3.5 * Math.sqrt(mss) / numberOfBars;
+        b = 1 / mss;
+        a = 2 * Math.PI * Math.pow(b / Math.PI, 1);
         updateDistribution();
         updateRealDistribution();
 
-        xyChart.setXAxisTitle("Velocity, m/s");
-        xyChart.setYAxisTitle("Probability");
-        xyChart.getStyler().setYAxisMax(1.5 * resolution * distribution(avgV));
+        xyChart.getStyler().setDecimalPattern("#,###.####");
+        xyChart.setXAxisTitle("Скорость, пикс/сек");
+        xyChart.setYAxisTitle("Вероятность");
+        xyChart.getStyler().setYAxisMax(1.5 * resolution * distribution(Math.sqrt(mss)));
         render();
     }
 
@@ -56,7 +54,7 @@ public class PlotMaxwell extends Plot{
      */
     @Override
     double distribution(double v) {
-        return (a * v*v * Math.exp(-b * v*v));
+        return (a * v * Math.exp(-b * v*v));
     }
 
 
@@ -71,7 +69,7 @@ public class PlotMaxwell extends Plot{
         for (int i = 0; i < numberOfBars; i++)
             realDistribution.add(i, 0);
         for (Atom atom : atoms) {
-            int barIndex = (int)(Math.sqrt(atom.vx * atom.vx + atom.vy * atom.vy) - 1) / resolution;
+            int barIndex = (int)Math.floor(Math.sqrt(atom.vx * atom.vx + atom.vy * atom.vy) / resolution);
             if (barIndex >= numberOfBars)
                 continue;
             realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
@@ -85,6 +83,6 @@ public class PlotMaxwell extends Plot{
             yData.add((double)realDistribution.get(i) / atoms.size());
             yData.add((double)realDistribution.get(i) / atoms.size());
         }
-        xyChart.updateXYSeries("Real Distribution", xData, yData, null);
+        xyChart.updateXYSeries("Экспериментальное распределние", xData, yData, null);
     }
 }

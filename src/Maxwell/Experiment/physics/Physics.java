@@ -54,7 +54,6 @@ public class Physics {
             processBorderCollisions(atom);
         }
 
-
         for (ArrayList<Atom> particles : grid) {
             if (particles != null)
                 particles.clear();
@@ -65,6 +64,8 @@ public class Physics {
             int i = (int)atom.y / D;
             int j = (int)atom.x / D;
             int n = i * gridWidth + j;
+            if (n < 0 || n >= grid.length)
+                continue;
             if (grid[n] == null) {
                 grid[n] = new ArrayList<>();
             }
@@ -127,10 +128,10 @@ public class Physics {
 
 
     private void processBorderCollisions(Atom atom) {
-        if (atom.x + D > WIDTH)  { atom.x = WIDTH - D; atom.vx = -atom.vx; }
-        if (atom.y + D > HEIGHT) { atom.y = HEIGHT - D; atom.vy = -atom.vy; }
-        if (atom.x < 0) { atom.x = 0; atom.vx = -atom.vx; }
-        if (atom.y < 0) { atom.y = 0; atom.vy = -atom.vy; }
+        if (atom.x + D > WIDTH && atom.vx > 0) atom.vx = -atom.vx;
+        if (atom.y + D > HEIGHT && atom.vy > 0) atom.vy = -atom.vy;
+        if (atom.x < 0 && atom.vx < 0) atom.vx = -atom.vx;
+        if (atom.y < 0 && atom.vy < 0) atom.vy = -atom.vy;
     }
 
 

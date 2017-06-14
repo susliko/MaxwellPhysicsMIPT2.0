@@ -6,10 +6,9 @@ import Maxwell.Experiment.physics.Atom;
 import Maxwell.Experiment.physics.Drawer;
 import Maxwell.Experiment.physics.Physics;
 import Maxwell.Experiment.plot.Plot;
-import Maxwell.Experiment.plot.PlotBolzman;
+import Maxwell.Experiment.plot.PlotBoltzmann;
 import Maxwell.Experiment.plot.PlotMaxwell;
 
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,15 +19,15 @@ public class Experiment {
     public static final int WIDTH  = 700;
     public static final int D = 2;
 
-    private static final double boltzmannAcceleration = 1;
+    private static final double boltzmannAcceleration = 100;
+
+    private static final int gasTPF = 20;
+    private static final int plotTPF = 1000;
 
     private boolean active = false;
 
     public void start(ExpType expType, int velocity, int numberOfAtoms) {
         active = true;
-
-        int gasTPF = 20;
-        int plotTPF = 1000;
 
         final List<Atom> atoms = new ArrayList<>();
         final Drawer drawer = new Drawer(atoms);
@@ -36,16 +35,19 @@ public class Experiment {
         final Physics physics;
         final Plot plot ;
 
+        generateAtoms(atoms, velocity, numberOfAtoms);
+
         switch (expType) {
             case MAXWELL:
-                plot = new PlotMaxwell(atoms, velocity);
+                plot = new PlotMaxwell(atoms);
                 physics = new Physics(atoms);
                 break;
             case BOLTZMANN:
-                plot = new PlotBolzman(atoms, velocity, boltzmannAcceleration * gasTPF, HEIGHT);
+                plot = new PlotBoltzmann(atoms, boltzmannAcceleration, HEIGHT);
                 physics = new Physics(atoms, atoms1 -> {
                     for (Atom atom : atoms)
-                        atom.vy += boltzmannAcceleration * gasTPF;
+                        if (atom.y <= HEIGHT - D)
+                            atom.vy += boltzmannAcceleration * gasTPF / 1000;
                 });
                 break;
             case KNUDSEN:
@@ -53,7 +55,7 @@ public class Experiment {
                 for (int i = 0; i < numberOfAtoms; i++)
                     isLeftSide.add(true);
 
-                plot = new PlotMaxwell(atoms, velocity);
+                plot = new PlotMaxwell(atoms);
                 physics = new Physics(atoms, atoms1 -> {
                     for (int i = 0; i < atoms.size(); i++) {
                         Atom atom = atoms.get(i);
@@ -85,8 +87,6 @@ public class Experiment {
 
         if (plot == null)
             return;
-
-        generateAtoms(atoms, velocity, numberOfAtoms);
 
         arena.setVisible(true);
         arena.setAtoms(drawer);
@@ -130,7 +130,7 @@ public class Experiment {
 
     private void generateAtoms(List<Atom> atoms, int velocity, int numberOfAtoms) {
         Random random = new Random(System.currentTimeMillis());
-        int v = (int)Math.floor(Math.sqrt(Math.pow(velocity, 2) / 2));
+        double v = Math.floor(Math.sqrt(Math.pow(velocity, 2) / 2));
         for (int i = 0; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH / 2);
             int y = random.nextInt(HEIGHT);
