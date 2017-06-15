@@ -1,4 +1,4 @@
-package Maxwell.Experiment.physics;
+package Maxwell.experiments.physics;
 
 import java.util.List;
 

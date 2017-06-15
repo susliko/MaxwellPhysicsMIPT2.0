@@ -1,6 +1,6 @@
-package Maxwell.Experiment.plot.PlotDistribution;
+package Maxwell.experiments.plot.PlotDistribution;
 
-import Maxwell.Experiment.physics.Atom;
+import Maxwell.experiments.physics.Atom;
 
 import java.util.*;
 
@@ -33,7 +33,7 @@ public class PlotMaxwell extends PlotDistribution {
         double mss = meanSquareSpeed();
         resolution = 3.5 * Math.sqrt(mss) / numberOfBars;
         b = 1 / mss;
-        a = 2 * Math.PI * Math.pow(b / Math.PI, 1);
+        a = 2 * Math.PI * b / Math.PI;
         updateDistribution();
         updateRealDistribution();
 

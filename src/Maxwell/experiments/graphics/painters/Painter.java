@@ -1,6 +1,6 @@
-package Maxwell.Experiment.graphics.painters;
+package Maxwell.experiments.graphics.painters;
 
-import Maxwell.Experiment.physics.Atom;
+import Maxwell.experiments.physics.Atom;
 
 import java.util.List;
 import java.awt.*;

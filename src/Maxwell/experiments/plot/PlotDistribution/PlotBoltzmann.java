@@ -1,12 +1,12 @@
-package Maxwell.Experiment.plot.PlotDistribution;
+package Maxwell.experiments.plot.PlotDistribution;
 
-import Maxwell.Experiment.physics.Atom;
+import Maxwell.experiments.physics.Atom;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static Maxwell.Experiment.Experiment.HEIGHT;
-import static Maxwell.Experiment.Experiment.boltzmannAcceleration;
+import static Maxwell.experiments.Experiment.HEIGHT;
+import static Maxwell.experiments.Experiment.boltzmannAcceleration;
 
 /**
  * Processes Bolzman distribution charts

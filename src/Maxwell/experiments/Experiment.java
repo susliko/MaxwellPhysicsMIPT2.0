@@ -1,16 +1,16 @@
-package Maxwell.Experiment;
+package Maxwell.experiments;
 
 import Maxwell.ExpType;
-import Maxwell.Experiment.graphics.frames.ArenaFrame;
-import Maxwell.Experiment.graphics.painters.WallPainterKnudsen;
-import Maxwell.Experiment.physics.Atom;
-import Maxwell.Experiment.physics.AtomProcessorBoltzmann;
-import Maxwell.Experiment.physics.AtomProcessorKnudsen;
-import Maxwell.Experiment.physics.Physics;
-import Maxwell.Experiment.plot.Plot;
-import Maxwell.Experiment.plot.PlotDistribution.PlotBoltzmann;
-import Maxwell.Experiment.plot.PlotDistribution.PlotMaxwell;
-import Maxwell.Experiment.plot.PlotTimeFunction.PlotKnudsen;
+import Maxwell.experiments.graphics.frames.ArenaFrame;
+import Maxwell.experiments.graphics.painters.WallPainterKnudsen;
+import Maxwell.experiments.physics.Atom;
+import Maxwell.experiments.physics.AtomProcessorBoltzmann;
+import Maxwell.experiments.physics.AtomProcessorKnudsen;
+import Maxwell.experiments.physics.Physics;
+import Maxwell.experiments.plot.Plot;
+import Maxwell.experiments.plot.PlotDistribution.PlotBoltzmann;
+import Maxwell.experiments.plot.PlotDistribution.PlotMaxwell;
+import Maxwell.experiments.plot.PlotTimeFunction.PlotKnudsen;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -123,7 +123,6 @@ public class Experiment {
             arena.repaint();
         }
 
-        // Updating image on the screen
         plot.dispose();
         arena.dispose();
     }

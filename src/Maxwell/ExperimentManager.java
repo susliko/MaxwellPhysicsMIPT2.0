@@ -1,6 +1,6 @@
 package Maxwell;
 
-import Maxwell.Experiment.Experiment;
+import Maxwell.experiments.Experiment;
 import Maxwell.graphics.frames.DialogFrame;
 
 import java.awt.event.ActionEvent;

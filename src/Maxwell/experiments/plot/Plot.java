@@ -1,4 +1,4 @@
-package Maxwell.Experiment.plot;
+package Maxwell.experiments.plot;
 
 /**
  * Class for plotting experiment results

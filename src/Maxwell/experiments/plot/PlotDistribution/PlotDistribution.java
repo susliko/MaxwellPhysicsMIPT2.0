@@ -1,7 +1,7 @@
-package Maxwell.Experiment.plot.PlotDistribution;
+package Maxwell.experiments.plot.PlotDistribution;
 
-import Maxwell.Experiment.physics.Atom;
-import Maxwell.Experiment.plot.Plot;
+import Maxwell.experiments.physics.Atom;
+import Maxwell.experiments.plot.Plot;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;

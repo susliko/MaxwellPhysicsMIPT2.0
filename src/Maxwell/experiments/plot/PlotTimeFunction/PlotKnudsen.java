@@ -1,10 +1,11 @@
-package Maxwell.Experiment.plot.PlotTimeFunction;
+package Maxwell.experiments.plot.PlotTimeFunction;
 
-import Maxwell.Experiment.physics.Atom;
+import Maxwell.experiments.physics.Atom;
 
 import java.util.List;
 
-import static Maxwell.Experiment.Experiment.WIDTH;
+import static Maxwell.experiments.Experiment.WIDTH;
+
 
 /**
  * Processes results of Knudsen experiment.
@@ -31,22 +32,22 @@ public class PlotKnudsen extends PlotTimeFunction{
      */
     @Override
     void updateFunctions() {
-        double leftRTS = 0;
+        double leftRMS = 0;
         int leftNum = 0;
-        double rightRTS = 0;
+        double rightRMS = 0;
         int rightNum = 0;
         for (Atom atom : atoms) {
             if (atom.x < WIDTH / 2) {
                 leftNum++;
-                leftRTS += atom.vx * atom.vx + atom.vy * atom.vy;
+                leftRMS += atom.vx * atom.vx + atom.vy * atom.vy;
             } else {
                 rightNum++;
-                rightRTS += atom.vx * atom.vx + atom.vy * atom.vy;
+                rightRMS += atom.vx * atom.vx + atom.vy * atom.vy;
             }
         }
-        leftRTS = Math.sqrt(leftRTS / leftNum);
-        rightRTS = Math.sqrt(rightRTS / rightNum);
-        appendFunction("СКС в левом сосуде", leftRTS);
-        appendFunction("СКС в правом сосуде", rightRTS);
+        leftRMS = Math.sqrt(leftRMS / leftNum);
+        rightRMS = Math.sqrt(rightRMS / rightNum);
+        appendFunction("СКС в левом сосуде", leftRMS);
+        appendFunction("СКС в правом сосуде", rightRMS);
     }
 }

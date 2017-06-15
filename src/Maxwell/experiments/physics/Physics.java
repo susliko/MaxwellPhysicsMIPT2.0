@@ -1,11 +1,11 @@
-package Maxwell.Experiment.physics;
+package Maxwell.experiments.physics;
 
-import Maxwell.Experiment.Experiment;
+import Maxwell.experiments.Experiment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static Maxwell.Experiment.Experiment.gasTPF;
+import static Maxwell.experiments.Experiment.gasTPF;
 
 
 
@@ -14,7 +14,7 @@ import static Maxwell.Experiment.Experiment.gasTPF;
  */
 public class Physics {
 
-    // See comments in @Experiment, fields are the same
+    // See comments in @experiments, fields are the same
     private final int HEIGHT;
     private final int WIDTH ;
     private final int D;

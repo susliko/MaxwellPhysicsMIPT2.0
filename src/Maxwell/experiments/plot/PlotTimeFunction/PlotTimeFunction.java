@@ -1,7 +1,7 @@
-package Maxwell.Experiment.plot.PlotTimeFunction;
+package Maxwell.experiments.plot.PlotTimeFunction;
 
-import Maxwell.Experiment.physics.Atom;
-import Maxwell.Experiment.plot.Plot;
+import Maxwell.experiments.physics.Atom;
+import Maxwell.experiments.plot.Plot;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static Maxwell.Experiment.Experiment.plotTPF;
+import static Maxwell.experiments.Experiment.plotTPF;
 
 /**
  * Processes plots with functions depending on time.

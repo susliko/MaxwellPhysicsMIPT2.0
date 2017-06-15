@@ -1,4 +1,4 @@
-package Maxwell.Experiment.plot.PlotTimeFunction;
+package Maxwell.experiments.plot.PlotTimeFunction;
 
 import java.util.ArrayList;
 import java.util.List;

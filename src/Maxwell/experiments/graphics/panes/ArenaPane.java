@@ -1,10 +1,10 @@
-package Maxwell.Experiment.graphics.panes;
+package Maxwell.experiments.graphics.panes;
 
 
-import Maxwell.Experiment.Experiment;
-import Maxwell.Experiment.graphics.painters.AtomsPainter;
-import Maxwell.Experiment.graphics.painters.Painter;
-import Maxwell.Experiment.physics.Atom;
+import Maxwell.experiments.Experiment;
+import Maxwell.experiments.graphics.painters.AtomsPainter;
+import Maxwell.experiments.graphics.painters.Painter;
+import Maxwell.experiments.physics.Atom;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,8 +1,8 @@
-package Maxwell.Experiment.graphics.painters;
+package Maxwell.experiments.graphics.painters;
 
 import java.awt.*;
 
-import static Maxwell.Experiment.Experiment.*;
+import static Maxwell.experiments.Experiment.*;
 
 
 

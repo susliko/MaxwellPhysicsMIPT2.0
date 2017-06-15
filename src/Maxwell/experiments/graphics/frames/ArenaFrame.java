@@ -1,7 +1,7 @@
-package Maxwell.Experiment.graphics.frames;
-import Maxwell.Experiment.graphics.panes.ArenaPane;
-import Maxwell.Experiment.graphics.painters.Painter;
-import Maxwell.Experiment.physics.Atom;
+package Maxwell.experiments.graphics.frames;
+import Maxwell.experiments.graphics.panes.ArenaPane;
+import Maxwell.experiments.graphics.painters.Painter;
+import Maxwell.experiments.physics.Atom;
 
 import javax.swing.*;
 import java.util.List;
@@ -22,9 +22,9 @@ public class ArenaFrame extends JFrame {
     }
 
     /**
-     *
-     * @param atoms
-     * @param painter re
+     * C
+     * @param atoms reference to the list of particles
+     * @param painter reference to the instance that is able to paint
      */
     public ArenaFrame(List<Atom> atoms, Painter painter) {
         super("Газ");
