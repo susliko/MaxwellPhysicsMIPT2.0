@@ -13,6 +13,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 /**
  * Processes plots with physical distributions.
  * Chart consists of theoretical distribution drawn with line and

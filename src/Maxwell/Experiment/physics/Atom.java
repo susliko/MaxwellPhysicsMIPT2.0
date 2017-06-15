@@ -1,5 +1,10 @@
 package Maxwell.Experiment.physics;
 
+
+
+/**
+ * Represents the instance of the particle of circle shape
+ */
 public class Atom {
 
     public Atom(double x, double y, double vx, double vy) {

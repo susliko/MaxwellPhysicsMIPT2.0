@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
 
+
 public class Dialog extends JFrame {
 
     private DialogPane pane;
@@ -54,7 +55,7 @@ class DialogPane extends JPanel {
     final int HEIGHT = 400;
     final int WIDTH = 400;
 
-    private final String[] experiments = { "Maxwell", "Boltzmann", "Knudsen" };
+    private final String[] experiments = { "Максвелл", "Больцман", "Кнудсен" };
 
     private JLabel velocityLabel;
     private JLabel numberLabel;
@@ -75,14 +76,14 @@ class DialogPane extends JPanel {
         experimentField.setFont(new Font("Arial", Font.BOLD, 20));
         ((JLabel)experimentField.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
-        velocityLabel = new JLabel("Enter velocity");
+        velocityLabel = new JLabel("Скорость(пикс/сек)");
         velocityLabel.setFont(new Font("Arial", Font.BOLD, 20));
         velocityLabel.setBackground(Color.BLACK);
         velocityLabel.setForeground(Color.white);
         velocityLabel.setHorizontalAlignment(SwingConstants.CENTER);
         velocityLabel.setOpaque(true);
 
-        numberLabel = new JLabel("Enter number of atoms");
+        numberLabel = new JLabel("Число частиц");
         numberLabel.setFont(new Font("Arial", Font.BOLD, 20));
         numberLabel.setBackground(Color.BLACK);
         numberLabel.setForeground(Color.white);
@@ -99,7 +100,7 @@ class DialogPane extends JPanel {
         numberField.setFont(new Font("Arial", Font.BOLD, 20));
         numberField.setHorizontalAlignment(SwingConstants.CENTER);
 
-        button = new JButton("Start!");
+        button = new JButton("Начать");
         button.setAlignmentX(CENTER_ALIGNMENT);
         button.setBorderPainted(false);
         button.setFont(new Font("Arial", Font.BOLD, 20));
@@ -142,13 +143,13 @@ class DialogPane extends JPanel {
     ExpType getExperiment() {
         String exp = experimentField.getSelectedItem().toString();
         switch (exp) {
-            case "Maxwell" :
+            case "Максвелл" :
                 experiment = ExpType.MAXWELL;
                 break;
-            case "Boltzmann" :
+            case "Больцман" :
                 experiment = ExpType.BOLTZMANN;
                 break;
-            case "Knudsen" :
+            case "Кнудсен" :
                 experiment = ExpType.KNUDSEN;
                 break;
         }

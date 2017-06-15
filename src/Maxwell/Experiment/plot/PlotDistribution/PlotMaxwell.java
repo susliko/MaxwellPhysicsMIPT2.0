@@ -29,7 +29,7 @@ public class PlotMaxwell extends PlotDistribution {
         super(atoms, "Распределение Максвелла");
         this.atoms = atoms;
 
-        numberOfBars = 25;
+        numberOfBars = 60;
         double mss = meanSquareSpeed();
         resolution = 3.5 * Math.sqrt(mss) / numberOfBars;
         b = 1 / mss;

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.util.List;
 
 
+
 public class Arena extends JFrame {
     public Arena(List<Atom> atoms) {
         super("Газ");

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+
 public class Master implements ActionListener {
 
     private final Experiment experiment = new Experiment();

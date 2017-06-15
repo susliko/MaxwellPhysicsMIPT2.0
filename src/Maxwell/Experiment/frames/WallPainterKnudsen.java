@@ -4,6 +4,8 @@ import java.awt.*;
 
 import static Maxwell.Experiment.Experiment.*;
 
+
+
 public class WallPainterKnudsen implements WallPainter{
     @Override
     public void paintWalls(Graphics g) {

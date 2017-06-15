@@ -5,6 +5,11 @@ import java.util.List;
 
 import static Maxwell.Experiment.Experiment.*;
 
+
+
+/**
+ * Am implementation of @AtomProcessor for Maxwell experiment
+ */
 public class AtomProcessorKnudsen implements AtomProcessor {
     private final List<Boolean> isLeftSide;
 
