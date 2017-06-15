@@ -1,4 +1,4 @@
-package Maxwell.Experiment.frames;
+package Maxwell.Experiment.graphics.painters;
 
 import java.awt.*;
 
@@ -6,9 +6,9 @@ import static Maxwell.Experiment.Experiment.*;
 
 
 
-public class WallPainterKnudsen implements WallPainter{
+public class WallPainterKnudsen extends Painter {
     @Override
-    public void paintWalls(Graphics g) {
+    public void paint(Graphics g) {
         Graphics2D g2= (Graphics2D)g;
         g2.setColor(Color.ORANGE);
         g2.drawLine(WIDTH / 2, 0, WIDTH / 2, HEIGHT / knudsenNumberOfHoles - D);

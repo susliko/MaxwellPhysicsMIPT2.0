@@ -1,4 +1,4 @@
-package Maxwell.frames;
+package Maxwell.graphics.panes;
 
 import Maxwell.ExpType;
 
@@ -9,51 +9,10 @@ import java.text.NumberFormat;
 
 
 
-public class Dialog extends JFrame {
+public class DialogPane extends JPanel {
 
-    private DialogPane pane;
-
-    public Dialog() {
-        super("Maxwell");
-        pane = new DialogPane();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation((screenSize.width - pane.WIDTH) / 2, (screenSize.height - pane.HEIGHT) / 2);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        getContentPane().add(pane);
-        pack();
-    }
-
-
-
-    public void setListener(ActionListener listener) {
-        pane.setListener(listener);
-    }
-
-
-
-    public int getVelocity() {
-        return pane.getVelocity();
-    }
-
-
-
-    public int getN() {
-        return pane.getN();
-    }
-
-
-
-    public ExpType getExperiment() {
-        return pane.getExperiment();
-    }
-}
-
-
-
-class DialogPane extends JPanel {
-
-    final int HEIGHT = 400;
-    final int WIDTH = 400;
+    public final int HEIGHT = 400;
+    public final int WIDTH = 400;
 
     private final String[] experiments = { "Максвелл", "Больцман", "Кнудсен" };
 
@@ -69,7 +28,7 @@ class DialogPane extends JPanel {
 
 
 
-    DialogPane() {
+    public DialogPane() {
         setBackground(Color.black);
 
         experimentField = new JComboBox(experiments);
@@ -122,7 +81,7 @@ class DialogPane extends JPanel {
 
 
 
-    int getVelocity() {
+    public int getVelocity() {
         try {
             velocity = Integer.parseInt(velocityField.getText().replace(",", ""));
         } catch (NumberFormatException ignored) { return 0; }
@@ -131,7 +90,7 @@ class DialogPane extends JPanel {
 
 
 
-    int getN() {
+    public int getN() {
         try {
             N = Integer.parseInt(numberField.getText().replace(",", ""));
         } catch (NumberFormatException ignored) { return 0; }
@@ -140,7 +99,7 @@ class DialogPane extends JPanel {
 
 
 
-    ExpType getExperiment() {
+    public ExpType getExperiment() {
         String exp = experimentField.getSelectedItem().toString();
         switch (exp) {
             case "Максвелл" :
@@ -157,7 +116,7 @@ class DialogPane extends JPanel {
     }
 
 
-    void setListener(ActionListener listener) {
+    public void setListener(ActionListener listener) {
         button.setActionCommand("run");
         numberField.setActionCommand("run");
         button.addActionListener(listener);

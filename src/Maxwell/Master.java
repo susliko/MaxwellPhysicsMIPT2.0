@@ -1,7 +1,7 @@
 package Maxwell;
 
 import Maxwell.Experiment.Experiment;
-import Maxwell.frames.Dialog;
+import Maxwell.graphics.frames.DialogFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +12,10 @@ public class Master implements ActionListener {
 
     private final Experiment experiment = new Experiment();
 
-    private final Dialog dialog = new Dialog();
+    private final DialogFrame dialog = new DialogFrame();
 
     public void run() {
+        experiment.setListener(this);
         dialog.setListener(this);
         dialog.setVisible(true);
     }
@@ -34,8 +35,8 @@ public class Master implements ActionListener {
             ExpType exp = dialog.getExperiment();
             int velocity = dialog.getVelocity();
             int N = dialog.getN();
-            Thread thread = new Thread(() -> experiment.start(exp, velocity, N));
-            thread.start();
+            Thread experimentThread = new Thread(() -> experiment.start(exp, velocity, N));
+            experimentThread.start();
         }
     }
 }
