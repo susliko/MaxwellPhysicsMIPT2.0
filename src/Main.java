@@ -1,10 +1,10 @@
-import Maxwell.Master;
+import Maxwell.ExperimentStarter;
 
 
 
 class Main {
     public static void main(String[] args) {
-        Master master = new Master();
-        master.run();
+        ExperimentStarter experimentStarter = new ExperimentStarter();
+        experimentStarter.run();
     }
 }
