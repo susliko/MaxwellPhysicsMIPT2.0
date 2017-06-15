@@ -5,6 +5,8 @@ import Maxwell.Experiment.Experiment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Maxwell.Experiment.Experiment.gasTPF;
+
 
 public class Physics {
 
@@ -44,13 +46,13 @@ public class Physics {
 
 
 
-    public void update(int dt) {
+    public void update() {
         if (atomProcessor != null)
             atomProcessor.processAtoms(atoms);
 
         for (Atom atom : atoms) {
-            atom.x += atom.vx * dt / 1000;
-            atom.y += atom.vy * dt / 1000;
+            atom.x += atom.vx * gasTPF / 1000;
+            atom.y += atom.vy * gasTPF / 1000;
             processBorderCollisions(atom);
         }
 

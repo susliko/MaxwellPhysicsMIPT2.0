@@ -2,8 +2,9 @@ package Maxwell.Experiment;
 
 import Maxwell.ExpType;
 import Maxwell.Experiment.frames.Arena;
+import Maxwell.Experiment.frames.WallPainterKnudsen;
 import Maxwell.Experiment.physics.Atom;
-import Maxwell.Experiment.physics.Drawer;
+import Maxwell.Experiment.physics.AtomProcessorKnudsen;
 import Maxwell.Experiment.physics.Physics;
 import Maxwell.Experiment.plot.Plot;
 import Maxwell.Experiment.plot.PlotBoltzmann;
@@ -18,11 +19,12 @@ public class Experiment {
     public static final int HEIGHT = 700;
     public static final int WIDTH  = 700;
     public static final int D = 2;
-
-    private static final double boltzmannAcceleration = 100;
-
-    private static final int gasTPF = 20;
+    public static final int gasTPF = 20;
     private static final int plotTPF = 1000;
+
+    public static final double boltzmannAcceleration = 100;
+
+    public static final int knudsenNumberOfHoles = 10;
 
     private boolean active = false;
 
@@ -30,20 +32,21 @@ public class Experiment {
         active = true;
 
         final List<Atom> atoms = new ArrayList<>();
-        final Drawer drawer = new Drawer(atoms);
-        final Arena arena = new Arena();
+        final Arena arena;
         final Physics physics;
-        final Plot plot ;
-
-        generateAtoms(atoms, velocity, numberOfAtoms);
+        final Plot plot;
 
         switch (expType) {
             case MAXWELL:
+                arena = new Arena(atoms);
+                generateAtomsFullArena(atoms, velocity, numberOfAtoms);
                 plot = new PlotMaxwell(atoms);
                 physics = new Physics(atoms);
                 break;
             case BOLTZMANN:
-                plot = new PlotBoltzmann(atoms, boltzmannAcceleration, HEIGHT);
+                arena = new Arena(atoms);
+                generateAtomsFullArena(atoms, velocity, numberOfAtoms);
+                plot = new PlotBoltzmann(atoms);
                 physics = new Physics(atoms, atoms1 -> {
                     for (Atom atom : atoms)
                         if (atom.y <= HEIGHT - D)
@@ -51,35 +54,13 @@ public class Experiment {
                 });
                 break;
             case KNUDSEN:
-                final List<Boolean> isLeftSide = new ArrayList<>(numberOfAtoms);
-                for (int i = 0; i < numberOfAtoms; i++)
-                    isLeftSide.add(true);
-
+                arena = new Arena(atoms, new WallPainterKnudsen());
+                generateAtomsKnudsen(atoms, velocity, numberOfAtoms);
                 plot = new PlotMaxwell(atoms);
-                physics = new Physics(atoms, atoms1 -> {
-                    for (int i = 0; i < atoms.size(); i++) {
-                        Atom atom = atoms.get(i);
-                        if (isLeftSide.get(i)) {
-                            if (atom.vx > 0 && atom.x > WIDTH / 2) {
-                                if (atom.y < HEIGHT / 2 - D / 2 || atom.y > HEIGHT / 2 + D / 2) {
-                                    atom.vx = -atom.vx;
-                                } else {
-                                    isLeftSide.set(i, false);
-                                }
-                            }
-                        } else {
-                            if (atom.vx < 0 && atom.x < WIDTH / 2) {
-                                if (atom.y < HEIGHT / 2 - D / 2 || atom.y > HEIGHT / 2 + D / 2) {
-                                    atom.vx = -atom.vx;
-                                } else {
-                                    isLeftSide.set(i, true);
-                                }
-                            }
-                        }
-                    }
-                });
+                physics = new Physics(atoms, new AtomProcessorKnudsen(numberOfAtoms));
                 break;
             default:
+                arena = null;
                 plot = null;
                 physics = null;
                 break;
@@ -89,7 +70,6 @@ public class Experiment {
             return;
 
         arena.setVisible(true);
-        arena.setAtoms(drawer);
 
         double sinceGasUpdate = 0;
         double sincePlotUpdate = 0;
@@ -103,7 +83,7 @@ public class Experiment {
             plotTimer = System.currentTimeMillis();
 
             while (sinceGasUpdate > gasTPF) {
-                physics.update(gasTPF);
+                physics.update();
                 sinceGasUpdate -= gasTPF;
             }
 
@@ -128,13 +108,24 @@ public class Experiment {
 
 
 
-    private void generateAtoms(List<Atom> atoms, int velocity, int numberOfAtoms) {
+    private void generateAtomsFullArena(List<Atom> atoms, int velocity, int numberOfAtoms) {
+        Random random = new Random(System.currentTimeMillis());
+        double v = Math.floor(Math.sqrt(Math.pow(velocity, 2) / 2));
+        for (int i = 0; i < numberOfAtoms; ++i) {
+            int x = random.nextInt(WIDTH);
+            int y = random.nextInt(HEIGHT);
+            Atom atom = new Atom(x, y, v, v);
+            atoms.add(atom);
+        }
+    }
+
+    private void generateAtomsKnudsen(List<Atom> atoms, int velocity, int numberOfAtoms) {
         Random random = new Random(System.currentTimeMillis());
         double v = Math.floor(Math.sqrt(Math.pow(velocity, 2) / 2));
         for (int i = 0; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH / 2);
             int y = random.nextInt(HEIGHT);
-            Atom atom = new Atom(x, y, v, v);
+            Atom atom = new Atom(x, y, -v, v);
             atoms.add(atom);
         }
     }

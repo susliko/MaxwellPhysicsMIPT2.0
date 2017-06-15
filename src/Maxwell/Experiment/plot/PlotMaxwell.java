@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Processes Maxwell distribution series
  */
-public class PlotMaxwell extends DistributionPlot {
+public class PlotMaxwell extends PlotDistribution {
     /**
      * Maxwell Distribution parameter. 4PI*(m / (2ktPI)) ^ (3/2).
      */

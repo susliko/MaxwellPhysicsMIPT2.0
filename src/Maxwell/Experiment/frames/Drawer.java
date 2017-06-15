@@ -1,7 +1,8 @@
-package Maxwell.Experiment.physics;
+package Maxwell.Experiment.frames;
 
 
 import Maxwell.Experiment.Experiment;
+import Maxwell.Experiment.physics.Atom;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,11 +17,22 @@ public class Drawer extends JPanel {
 
     private final List<Atom> atoms;
 
-    public Drawer(List<Atom> atoms) {
+    private final WallPainter wallPainter;
+
+    Drawer(List<Atom> atoms) {
         this.HEIGHT = Experiment.HEIGHT;
         this.WIDTH = Experiment.WIDTH;
         this.atoms = atoms;
         this.D = Experiment.D;
+        this.wallPainter = null;
+    }
+
+    Drawer(List<Atom> atoms, WallPainter wallPainter) {
+        this.HEIGHT = Experiment.HEIGHT;
+        this.WIDTH = Experiment.WIDTH;
+        this.atoms = atoms;
+        this.D = Experiment.D;
+        this.wallPainter = wallPainter;
     }
 
 
@@ -38,6 +50,8 @@ public class Drawer extends JPanel {
         for (Atom atom : atoms) {
             g2.fillOval((int)atom.x, (int)atom.y, D, D);
         }
+        if (wallPainter != null)
+            wallPainter.paintWalls(g);
     }
 }
 

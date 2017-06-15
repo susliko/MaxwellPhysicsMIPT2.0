@@ -5,24 +5,17 @@ import Maxwell.Experiment.physics.Atom;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Maxwell.Experiment.Experiment.HEIGHT;
+import static Maxwell.Experiment.Experiment.boltzmannAcceleration;
+
 /**
  * Processes Bolzman distribution series
  */
-public class PlotBoltzmann extends DistributionPlot {
+public class PlotBoltzmann extends PlotDistribution {
     /**
      * Bolzman distribution parameter. m / kT.
      */
     private double a;
-
-    /**
-     * Height of arena.
-     */
-    private final int height;
-
-    /**
-     * Gravitational acceleration
-     */
-    private final double acceleration;
 
     /**
      * Bolzman distribution parameter. n0.
@@ -33,18 +26,14 @@ public class PlotBoltzmann extends DistributionPlot {
      * Sets distribution parameters and draws plot.
      *
      * @param atoms array with information about atoms.
-     * @param acceleration acceleration in force field
-     * @param height height of arena.
      */
-    public PlotBoltzmann(List<Atom> atoms, double acceleration, int height) {
+    public PlotBoltzmann(List<Atom> atoms) {
         super(atoms, "Распределение Больцмана");
-        this.height = height;
-        this.acceleration = acceleration;
 
         numberOfBars = 25;
-        resolution = height / numberOfBars;
+        resolution = HEIGHT / numberOfBars;
 
-        a = 2 * acceleration / meanSquareSpeed();
+        a = 2 * boltzmannAcceleration / meanSquareSpeed();
 
         xyChart.setXAxisTitle("Высота, пикс");
         xyChart.setYAxisTitle("Концентрация * dV");
@@ -91,13 +80,13 @@ public class PlotBoltzmann extends DistributionPlot {
         for (int i = 0; i < numberOfBars; i++)
             realDistribution.add(i, 0);
         for (Atom atom : atoms) {
-            int barIndex = (int)Math.floor((height - atom.y) / resolution);
+            int barIndex = (int)Math.floor((HEIGHT - atom.y) / resolution);
             if (barIndex < 0 || barIndex >= numberOfBars)
                 continue;
             realDistribution.set(barIndex, realDistribution.get(barIndex) + 1);
         }
 
-        a = 2 * acceleration / meanSquareSpeed();
+        a = 2 * boltzmannAcceleration / meanSquareSpeed();
 
         ArrayList<Double> xData = new ArrayList<>();
         ArrayList<Double> yData = new ArrayList<>();

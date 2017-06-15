@@ -16,7 +16,7 @@ import java.util.List;
  * Processes plots.
  * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>.
  */
-public abstract class DistributionPlot implements Plot{
+public abstract class PlotDistribution implements Plot{
     /**
      * Reference to a list of atoms.
      */
@@ -48,7 +48,7 @@ public abstract class DistributionPlot implements Plot{
     String distributionName;
 
     /**
-     * DistributionPlot JFrame
+     * PlotDistribution JFrame
      */
     private JFrame plotFrame;
 
@@ -59,7 +59,7 @@ public abstract class DistributionPlot implements Plot{
      * @param atoms reference to a list of atoms
      * @param distributionName name of theoretical distribution
      */
-    DistributionPlot(List<Atom> atoms, String distributionName) {
+    PlotDistribution(List<Atom> atoms, String distributionName) {
         this.atoms = atoms;
         this.distributionName = distributionName;
 
@@ -111,7 +111,7 @@ public abstract class DistributionPlot implements Plot{
     /**
      * Updates distribution series.
      *
-     * @see DistributionPlot#distribution(double)
+     * @see PlotDistribution#distribution(double)
      */
     void updateDistribution(){
         ArrayList<Double> distributionX = new ArrayList<>();

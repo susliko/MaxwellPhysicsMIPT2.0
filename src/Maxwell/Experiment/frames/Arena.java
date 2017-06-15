@@ -1,18 +1,23 @@
 package Maxwell.Experiment.frames;
 
+import Maxwell.Experiment.physics.Atom;
+
 import javax.swing.*;
-import java.awt.*;
+import java.util.List;
 
 
 public class Arena extends JFrame {
-
-    public Arena() {
-        super("Maxwell");
+    public Arena(List<Atom> atoms) {
+        super("Газ");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        add(new Drawer(atoms));
     }
 
-    public void setAtoms(JPanel drawer) {
-        add(drawer);
+    public Arena(List<Atom> atoms, WallPainter wallPainter) {
+        super("Газ");
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        add(new Drawer(atoms, wallPainter));
     }
 }
