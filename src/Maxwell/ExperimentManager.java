@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 
 
-public class ExperimentStarter implements ActionListener {
+public class ExperimentManager implements ActionListener {
 
     private final Experiment experiment = new Experiment();
 
