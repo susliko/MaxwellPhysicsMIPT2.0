@@ -7,8 +7,8 @@ import Maxwell.Experiment.physics.Atom;
 import Maxwell.Experiment.physics.AtomProcessorKnudsen;
 import Maxwell.Experiment.physics.Physics;
 import Maxwell.Experiment.plot.Plot;
-import Maxwell.Experiment.plot.PlotBoltzmann;
-import Maxwell.Experiment.plot.PlotMaxwell;
+import Maxwell.Experiment.plot.PlotDistribution.PlotBoltzmann;
+import Maxwell.Experiment.plot.PlotDistribution.PlotMaxwell;
 import Maxwell.Experiment.plot.PlotTimeFunction.PlotKnudsen;
 
 import java.util.ArrayList;
@@ -66,9 +66,6 @@ public class Experiment {
                 physics = null;
                 break;
         }
-
-        if (plot == null)
-            return;
 
         arena.setVisible(true);
 

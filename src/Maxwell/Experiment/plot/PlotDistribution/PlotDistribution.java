@@ -1,6 +1,7 @@
-package Maxwell.Experiment.plot;
+package Maxwell.Experiment.plot.PlotDistribution;
 
 import Maxwell.Experiment.physics.Atom;
+import Maxwell.Experiment.plot.Plot;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -13,12 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Processes plots.
- * Uses XChart library, see <a href="http://knowm.org/open-source/xchart/">XChart</a>.
+ * Processes plots with physical distributions.
+ * Chart consists of theoretical distribution drawn with line and
+ * histogram displaying real results
  */
-public abstract class PlotDistribution implements Plot{
+public abstract class PlotDistribution implements Plot {
     /**
-     * Reference to a list of atoms.
+     * List of atoms.
      */
     List<Atom> atoms;
 
@@ -48,7 +50,7 @@ public abstract class PlotDistribution implements Plot{
     String distributionName;
 
     /**
-     * PlotDistribution JFrame
+     * Plot frame
      */
     private JFrame plotFrame;
 

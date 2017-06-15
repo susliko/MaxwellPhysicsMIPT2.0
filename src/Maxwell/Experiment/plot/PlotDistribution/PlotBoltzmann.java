@@ -1,4 +1,4 @@
-package Maxwell.Experiment.plot;
+package Maxwell.Experiment.plot.PlotDistribution;
 
 import Maxwell.Experiment.physics.Atom;
 
@@ -9,7 +9,7 @@ import static Maxwell.Experiment.Experiment.HEIGHT;
 import static Maxwell.Experiment.Experiment.boltzmannAcceleration;
 
 /**
- * Processes Bolzman distribution series
+ * Processes Bolzman distribution charts
  */
 public class PlotBoltzmann extends PlotDistribution {
     /**

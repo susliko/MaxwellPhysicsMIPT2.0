@@ -1,15 +1,15 @@
-package Maxwell.Experiment.plot;
+package Maxwell.Experiment.plot.PlotDistribution;
 
 import Maxwell.Experiment.physics.Atom;
 
 import java.util.*;
 
 /**
- * Processes Maxwell distribution series
+ * Processes Maxwell distribution charts
  */
 public class PlotMaxwell extends PlotDistribution {
     /**
-     * Maxwell Distribution parameter. 4PI*(m / (2ktPI)) ^ (3/2).
+     * Maxwell Distribution parameter. 2 * (m / (2kt)).
      */
     private double a;
 
@@ -47,7 +47,7 @@ public class PlotMaxwell extends PlotDistribution {
 
     /**
      * Counts probability of having required velocity <code>v</code>.
-     * Uses Maxwell distribution.
+     * Uses two-dimensional Maxwell distribution.
      *
      * @param v velocity.
      * @return probability of having required velocity.

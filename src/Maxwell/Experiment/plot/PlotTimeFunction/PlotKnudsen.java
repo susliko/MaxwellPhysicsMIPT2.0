@@ -6,7 +6,16 @@ import java.util.List;
 
 import static Maxwell.Experiment.Experiment.WIDTH;
 
+/**
+ * Processes results of Knudsen experiment.
+ */
 public class PlotKnudsen extends PlotTimeFunction{
+    /**
+     * Sets styles of chart
+     *
+     * @param atoms list of atoms
+     * @see PlotTimeFunction#atoms
+     */
     public PlotKnudsen(List<Atom> atoms) {
         super(atoms);
         xyChart.setXAxisTitle("Время, сек");
@@ -16,6 +25,10 @@ public class PlotKnudsen extends PlotTimeFunction{
         declareFunction("СКС в правом сосуде");
     }
 
+
+    /**
+     * Counts and updates root mean square speed
+     */
     @Override
     void updateFunctions() {
         double leftRTS = 0;
