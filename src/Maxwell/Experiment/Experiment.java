@@ -9,6 +9,7 @@ import Maxwell.Experiment.physics.Physics;
 import Maxwell.Experiment.plot.Plot;
 import Maxwell.Experiment.plot.PlotBoltzmann;
 import Maxwell.Experiment.plot.PlotMaxwell;
+import Maxwell.Experiment.plot.PlotTimeFunction.PlotKnudsen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Experiment {
     public static final int WIDTH  = 700;
     public static final int D = 2;
     public static final int gasTPF = 20;
-    private static final int plotTPF = 1000;
+    public static final int plotTPF = 1000;
 
     public static final double boltzmannAcceleration = 100;
 
@@ -56,7 +57,7 @@ public class Experiment {
             case KNUDSEN:
                 arena = new Arena(atoms, new WallPainterKnudsen());
                 generateAtomsKnudsen(atoms, velocity, numberOfAtoms);
-                plot = new PlotMaxwell(atoms);
+                plot = new PlotKnudsen(atoms);
                 physics = new Physics(atoms, new AtomProcessorKnudsen(numberOfAtoms));
                 break;
             default:

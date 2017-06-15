@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.List;
 
 
-public class Drawer extends JPanel {
+class Drawer extends JPanel {
 
     private final int HEIGHT;
     private final int WIDTH ;
