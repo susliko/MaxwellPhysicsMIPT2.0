@@ -49,7 +49,7 @@ public abstract class PlotDistribution implements Plot {
     /**
      * Name of theoretical distribution
      */
-    String distributionName;
+    private String distributionName;
 
     /**
      * Plot frame
@@ -125,9 +125,9 @@ public abstract class PlotDistribution implements Plot {
         ArrayList<Double> distributionY = new ArrayList<>();
 
         for (int i = 0; i < numberOfBars; i++) {
-            double currY = i * resolution;
-            distributionX.add(currY + resolution / 2);
-            distributionY.add(distribution(currY) * resolution);
+            double currX = i * resolution;
+            distributionX.add(currX + resolution / 2);
+            distributionY.add(distribution(currX) * resolution);
         }
 
         xyChart.updateXYSeries(distributionName,
