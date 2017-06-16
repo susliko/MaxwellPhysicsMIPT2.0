@@ -14,8 +14,8 @@ import java.util.List;
 
 public class ArenaPane extends JPanel {
 
-    private final int HEIGHT;
-    private final int WIDTH ;
+    public final int HEIGHT;
+    public final int WIDTH ;
 
     private final List<Atom> atoms;
 

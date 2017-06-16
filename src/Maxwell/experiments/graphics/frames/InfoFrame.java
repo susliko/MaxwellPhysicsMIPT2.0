@@ -25,6 +25,7 @@ public class InfoFrame extends JFrame {
 
         setLocation(50, screenSize.height - (int)windowSize.getHeight() - 400);
 
+        System.out.println(expType);
         switch (expType) {
             case MAXWELL:
                 pane = new MaxwellInfoPane(atoms);
@@ -45,7 +46,6 @@ public class InfoFrame extends JFrame {
         UIManager.put("TextField.background", Color.lightGray);
         UIManager.put("TextField.border", BorderFactory.createLineBorder(Color.BLACK));
 
-
         SwingUtilities.updateComponentTreeUI(this);
     }
 
@@ -54,6 +54,8 @@ public class InfoFrame extends JFrame {
     public void addListener(ActionListener listener) {
         pane.addListener(listener);
     }
+
+
 
     public void update() {
         pane.update();

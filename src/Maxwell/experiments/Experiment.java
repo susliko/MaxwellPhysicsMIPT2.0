@@ -3,6 +3,7 @@ package Maxwell.experiments;
 import Maxwell.ExpType;
 import Maxwell.experiments.graphics.frames.ArenaFrame;
 import Maxwell.experiments.graphics.frames.InfoFrame;
+import Maxwell.experiments.graphics.painters.WallPainterKnudsen;
 import Maxwell.experiments.physics.Atom;
 import Maxwell.experiments.physics.AtomProcessorBoltzmann;
 import Maxwell.experiments.physics.AtomProcessorKnudsen;
@@ -53,8 +54,8 @@ public class Experiment {
         active = true;
 
         final List<Atom> atoms = new ArrayList<>();
-        final ArenaFrame arena = new ArenaFrame(atoms);
         final InfoFrame infoScreen = new InfoFrame(expType, atoms);
+        final ArenaFrame arena;
         final Physics physics;
         final Plot plot;
 
@@ -63,26 +64,29 @@ public class Experiment {
         // Running different experiments according to the specified value
         switch (expType) {
             case MAXWELL:
+                arena = new ArenaFrame(atoms);
                 generateAtomsFullArena(atoms, velocity, numberOfAtoms);
                 plot = new PlotMaxwell(atoms);
                 physics = new Physics(atoms);
                 break;
             case BOLTZMANN:
+                arena = new ArenaFrame(atoms);
                 generateAtomsFullArena(atoms, velocity, numberOfAtoms);
                 plot = new PlotBoltzmann(atoms);
                 // see @AtomProcessorBoltzmann
                 physics = new Physics(atoms, new AtomProcessorBoltzmann());
                 break;
             case KNUDSEN:
+                arena = new ArenaFrame(atoms, new WallPainterKnudsen());
                 generateAtomsKnudsen(atoms, velocity, numberOfAtoms);
                 plot = new PlotKnudsen(atoms);
                 // see @AtomProcessorKnudsen
                 physics = new Physics(atoms, new AtomProcessorKnudsen(numberOfAtoms));
                 break;
             default:
+                arena = null;
                 plot = null;
                 physics = null;
-                break;
         }
 
         arena.setVisible(true);
