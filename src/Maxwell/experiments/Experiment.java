@@ -2,7 +2,7 @@ package Maxwell.experiments;
 
 import Maxwell.ExpType;
 import Maxwell.experiments.graphics.frames.ArenaFrame;
-import Maxwell.experiments.graphics.painters.WallPainterKnudsen;
+import Maxwell.experiments.graphics.frames.InfoFrame;
 import Maxwell.experiments.physics.Atom;
 import Maxwell.experiments.physics.AtomProcessorBoltzmann;
 import Maxwell.experiments.physics.AtomProcessorKnudsen;
@@ -42,15 +42,6 @@ public class Experiment {
 
 
     /**
-     *
-     * @param listener reference to the specified ActionListener
-     */
-    public void setListener(ActionListener listener) {
-
-    }
-
-
-    /**
      * Runs specified experiment
      *
      * @param expType determines which experiment is intended to run
@@ -58,44 +49,44 @@ public class Experiment {
      *                 axes ( X and Y, both velocities are equal )
      * @param numberOfAtoms stores total number of particles
      */
-    public void start(ExpType expType, int velocity, int numberOfAtoms) {
+    public void start(ExpType expType, int velocity, int numberOfAtoms, ActionListener listener) {
         active = true;
 
         final List<Atom> atoms = new ArrayList<>();
-        final ArenaFrame arena;
+        final ArenaFrame arena = new ArenaFrame(atoms);
+        final InfoFrame infoScreen = new InfoFrame(expType, atoms);
         final Physics physics;
         final Plot plot;
+
+        infoScreen.addListener(listener);
 
         // Running different experiments according to the specified value
         switch (expType) {
             case MAXWELL:
-                arena = new ArenaFrame(atoms);
                 generateAtomsFullArena(atoms, velocity, numberOfAtoms);
                 plot = new PlotMaxwell(atoms);
                 physics = new Physics(atoms);
                 break;
             case BOLTZMANN:
-                arena = new ArenaFrame(atoms);
                 generateAtomsFullArena(atoms, velocity, numberOfAtoms);
                 plot = new PlotBoltzmann(atoms);
                 // see @AtomProcessorBoltzmann
                 physics = new Physics(atoms, new AtomProcessorBoltzmann());
                 break;
             case KNUDSEN:
-                arena = new ArenaFrame(atoms, new WallPainterKnudsen());
                 generateAtomsKnudsen(atoms, velocity, numberOfAtoms);
                 plot = new PlotKnudsen(atoms);
                 // see @AtomProcessorKnudsen
                 physics = new Physics(atoms, new AtomProcessorKnudsen(numberOfAtoms));
                 break;
             default:
-                arena = null;
                 plot = null;
                 physics = null;
                 break;
         }
 
         arena.setVisible(true);
+        infoScreen.setVisible(true);
 
         double sinceGasUpdate = 0;
         double sincePlotUpdate = 0;
@@ -115,16 +106,20 @@ public class Experiment {
             }
 
             if (sincePlotUpdate > plotTPF) {
+                infoScreen.update();
                 plot.render();
                 sincePlotUpdate = 0;
             }
 
             arena.pack();
             arena.repaint();
+            infoScreen.pack();
+            infoScreen.repaint();
         }
 
         plot.dispose();
         arena.dispose();
+        infoScreen.dispose();
     }
 
 

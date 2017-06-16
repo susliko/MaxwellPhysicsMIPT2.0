@@ -15,7 +15,6 @@ public class ExperimentManager implements ActionListener {
     private final DialogFrame dialog = new DialogFrame();
 
     public void run() {
-        experiment.setListener(this);
         dialog.setListener(this);
         dialog.setVisible(true);
     }
@@ -35,7 +34,7 @@ public class ExperimentManager implements ActionListener {
             ExpType exp = dialog.getExperiment();
             int velocity = dialog.getVelocity();
             int N = dialog.getN();
-            Thread experimentThread = new Thread(() -> experiment.start(exp, velocity, N));
+            Thread experimentThread = new Thread(() -> experiment.start(exp, velocity, N, this));
             experimentThread.start();
         }
     }

@@ -23,8 +23,8 @@ public class DialogPane extends JPanel {
     private JButton button;
     private JComboBox experimentField;
 
-    int velocity;
-    int N;
+    private int velocity;
+    private int N;
 
 
 
@@ -77,7 +77,7 @@ public class DialogPane extends JPanel {
     }
 
 
-    ExpType experiment;
+    private ExpType experiment;
 
 
 
@@ -114,6 +114,7 @@ public class DialogPane extends JPanel {
         }
         return experiment;
     }
+
 
 
     public void setListener(ActionListener listener) {

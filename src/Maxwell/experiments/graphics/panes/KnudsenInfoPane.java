@@ -4,6 +4,7 @@ package Maxwell.experiments.graphics.panes;
 import Maxwell.experiments.physics.Atom;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 
@@ -13,11 +14,13 @@ public class KnudsenInfoPane extends InfoPane {
         super(atoms);
     }
 
+    @Override
+    public void addListener(ActionListener listener) {
 
+    }
 
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void update() {
 
     }
 }

@@ -3,6 +3,7 @@ package Maxwell.experiments.graphics.panes;
 import Maxwell.experiments.physics.Atom;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 
@@ -12,9 +13,17 @@ public class BoltzmannInfoPane extends InfoPane {
         super(atoms);
     }
 
+
+
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void addListener(ActionListener listener) {
+
+    }
+
+
+
+    @Override
+    public void update() {
 
     }
 }

@@ -8,27 +8,54 @@ import Maxwell.experiments.graphics.panes.MaxwellInfoPane;
 import Maxwell.experiments.physics.Atom;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 
 public class InfoFrame extends JFrame {
 
+    private InfoPane pane;
 
     public InfoFrame(ExpType expType, List<Atom> atoms) {
         super("Ход эксперимента");
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
+        Dimension windowSize = getPreferredSize();
+
+        setLocation(50, screenSize.height - (int)windowSize.getHeight() - 400);
 
         switch (expType) {
             case MAXWELL:
-                add(new MaxwellInfoPane(atoms));
+                pane = new MaxwellInfoPane(atoms);
                 break;
             case BOLTZMANN:
-                add(new BoltzmannInfoPane(atoms));
+                pane = new BoltzmannInfoPane(atoms);
                 break;
             case KNUDSEN:
-                add(new KnudsenInfoPane(atoms));
+                pane = new KnudsenInfoPane(atoms);
                 break;
         }
+
+        add(pane);
+
+        UIManager.put("Label.font", new Font("Arial", Font.BOLD, 20));
+        UIManager.put("TextField.font", new Font("Arial", Font.BOLD, 20));
+        UIManager.put("Button.font", new Font("Arial", Font.BOLD, 20));
+        UIManager.put("TextField.background", Color.lightGray);
+        UIManager.put("TextField.border", BorderFactory.createLineBorder(Color.BLACK));
+
+
+        SwingUtilities.updateComponentTreeUI(this);
+    }
+
+
+
+    public void addListener(ActionListener listener) {
+        pane.addListener(listener);
+    }
+
+    public void update() {
+        pane.update();
     }
 }

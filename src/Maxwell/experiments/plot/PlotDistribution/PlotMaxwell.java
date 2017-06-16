@@ -4,6 +4,8 @@ import Maxwell.experiments.physics.Atom;
 
 import java.util.*;
 
+
+
 /**
  * Processes Maxwell distribution charts
  */
@@ -33,7 +35,7 @@ public class PlotMaxwell extends PlotDistribution {
         double mss = meanSquareSpeed();
         resolution = 3.5 * Math.sqrt(mss) / numberOfBars;
         b = 1 / mss;
-        a = 2 * Math.PI * b / Math.PI;
+        a = 2 * b;
         updateDistribution();
         updateRealDistribution();
 
