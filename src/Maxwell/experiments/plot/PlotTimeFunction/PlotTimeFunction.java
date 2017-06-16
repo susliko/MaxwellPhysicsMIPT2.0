@@ -98,7 +98,7 @@ public abstract class PlotTimeFunction implements Plot {
         List<Double> empty = new ArrayList<>(1);
         empty.add(0.0);
         functions.put(name, tf);
-        xyChart.addSeries(name, null, empty);
+        xyChart.addSeries(name, empty, empty);
     }
 
 

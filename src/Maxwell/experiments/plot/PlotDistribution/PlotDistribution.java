@@ -49,7 +49,7 @@ public abstract class PlotDistribution implements Plot {
     /**
      * Name of theoretical distribution
      */
-    String distributionName;
+    private String distributionName;
 
     /**
      * Plot frame
@@ -99,6 +99,8 @@ public abstract class PlotDistribution implements Plot {
 
     /**
      * Counts mean square speed
+     *
+     * @return mean square speed. Not root mean square speed
      */
     double meanSquareSpeed() {
         double sumV = 0;
@@ -114,20 +116,20 @@ public abstract class PlotDistribution implements Plot {
 
     /**
      * Updates distribution series.
+     * Counts distribution point as {@link #resolution} * x, where x is histogram bar center
      *
-     * @see PlotDistribution#distribution(double)
+     * @see #distribution(double)
      */
     void updateDistribution(){
         ArrayList<Double> distributionX = new ArrayList<>();
         ArrayList<Double> distributionY = new ArrayList<>();
-        distributionX.add(0.0);
-        distributionY.add(resolution * distribution(0.0));
+
         for (int i = 0; i < numberOfBars; i++) {
             double currX = i * resolution;
-            double nextX = (i + 1) * resolution;
             distributionX.add(currX + resolution / 2);
-            distributionY.add(resolution * (distribution(currX) + distribution(nextX)) / 2);
+            distributionY.add(distribution(currX) * resolution);
         }
+
         xyChart.updateXYSeries(distributionName,
                 distributionX,
                 distributionY,

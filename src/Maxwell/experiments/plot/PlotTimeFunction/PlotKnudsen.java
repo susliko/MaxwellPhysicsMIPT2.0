@@ -45,9 +45,13 @@ public class PlotKnudsen extends PlotTimeFunction{
                 rightRMS += atom.vx * atom.vx + atom.vy * atom.vy;
             }
         }
-        leftRMS = Math.sqrt(leftRMS / leftNum);
-        rightRMS = Math.sqrt(rightRMS / rightNum);
-        appendFunction("СКС в левом сосуде", leftRMS);
-        appendFunction("СКС в правом сосуде", rightRMS);
+        if (leftNum != 0) {
+            leftRMS = Math.sqrt(leftRMS / leftNum);
+            appendFunction("СКС в левом сосуде", leftRMS);
+        }
+        if (rightNum != 0) {
+            rightRMS = Math.sqrt(rightRMS / rightNum);
+            appendFunction("СКС в правом сосуде", rightRMS);
+        }
     }
 }

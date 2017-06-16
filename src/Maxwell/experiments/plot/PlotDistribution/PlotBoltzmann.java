@@ -22,6 +22,7 @@ public class PlotBoltzmann extends PlotDistribution {
      */
     private int n0 = 0;
 
+
     /**
      * Sets distribution parameters and draws plot.
      *
@@ -40,6 +41,7 @@ public class PlotBoltzmann extends PlotDistribution {
         render();
     }
 
+
     /**
      * Counts concentration for required height.
      * Uses Bolzman distribution.
@@ -50,22 +52,6 @@ public class PlotBoltzmann extends PlotDistribution {
     @Override
     double distribution(double height) {
         return (n0 * Math.exp(-a * height));
-    }
-
-
-    @Override
-    void updateDistribution() {
-        ArrayList<Double> distributionX = new ArrayList<>();
-        ArrayList<Double> distributionY = new ArrayList<>();
-        for (int i = 0; i < numberOfBars; i++) {
-            double currY = i * resolution;
-            distributionX.add(currY + resolution / 2);
-            distributionY.add(distribution(currY) * resolution);
-        }
-        xyChart.updateXYSeries(distributionName,
-                distributionX,
-                distributionY,
-                null);
     }
 
 

@@ -164,7 +164,7 @@ public class Experiment {
     private void generateAtomsKnudsen(List<Atom> atoms, int velocity, int numberOfAtoms) {
         Random random = new Random(System.currentTimeMillis());
         double v = Math.floor(Math.sqrt(Math.pow(velocity, 2) / 2));
-        for (int i = 0; i < numberOfAtoms; ++i) {
+        for (int i = 1; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH / 2);
             int y = random.nextInt(HEIGHT);
             Atom atom = new Atom(x, y, -v, v);

@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class PlotMaxwell extends PlotDistribution {
     /**
-     * Maxwell Distribution parameter. 2 * (m / (2kt)).
+     * Maxwell Distribution parameter. m / kt.
      */
     private double a;
 
