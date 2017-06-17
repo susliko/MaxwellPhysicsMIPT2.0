@@ -46,30 +46,18 @@ public class PistonInfoPane extends InfoPane {
         add(labelPanel);
         add(fieldsPanel);
 
-        JButton increaseMassButt = new JButton("+ 1000m");
-        increaseMassButt.setPreferredSize(new Dimension(150, 50));
+        JButton increaseMassButt = new JButton("x4");
+        increaseMassButt.setPreferredSize(new Dimension(100, 50));
         increaseMassButt.setBorderPainted(false);
-        increaseMassButt.addActionListener(e -> Experiment.pistonWeight += 1000);
+        increaseMassButt.addActionListener(e -> Experiment.pistonWeight *= 4);
         add(increaseMassButt, CENTER_ALIGNMENT);
 
-        JButton decreaseMassButt = new JButton("- 1000m");
-        decreaseMassButt.setPreferredSize(new Dimension(150, 50));
-        decreaseMassButt.addActionListener(e -> Experiment.pistonWeight -= 1000);
+        JButton decreaseMassButt = new JButton("x0.25");
+        decreaseMassButt.setPreferredSize(new Dimension(100, 50));
+        decreaseMassButt.addActionListener(e -> Experiment.pistonWeight /= 4);
         decreaseMassButt.setBorderPainted(false);
-
-        JButton doubleMassButt = new JButton("x2");
-        doubleMassButt.setPreferredSize(new Dimension(100, 50));
-        doubleMassButt.setBorderPainted(false);
-        doubleMassButt.addActionListener(e -> Experiment.pistonWeight *= 2);
-        add(doubleMassButt, CENTER_ALIGNMENT);
-
-        JButton undoubleMassButt = new JButton("x0.5");
-        undoubleMassButt.setPreferredSize(new Dimension(100, 50));
-        undoubleMassButt.addActionListener(e -> Experiment.pistonWeight /= 2);
-        undoubleMassButt.setBorderPainted(false);
-        add(undoubleMassButt, CENTER_ALIGNMENT);
-
         add(decreaseMassButt, CENTER_ALIGNMENT);
+
         add(stopButton, CENTER_ALIGNMENT);
     }
 

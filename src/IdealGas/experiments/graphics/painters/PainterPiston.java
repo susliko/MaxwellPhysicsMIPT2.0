@@ -18,7 +18,7 @@ public class PainterPiston extends Painter {
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.BLACK);
-        g2.fillRect(0, 0, WIDTH, (int)Math.floor(piston.getPistonY()));
+        g2.fillRect(0, 0, WIDTH, (int)Math.ceil(piston.getPistonY()));
         g2.setColor(Color.ORANGE);
         g2.drawLine(0, (int)Math.ceil(piston.getPistonY()), WIDTH, (int)Math.ceil(piston.getPistonY()));
     }

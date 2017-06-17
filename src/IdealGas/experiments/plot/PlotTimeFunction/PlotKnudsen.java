@@ -2,9 +2,9 @@ package IdealGas.experiments.plot.PlotTimeFunction;
 
 import IdealGas.experiments.physics.Atom;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static IdealGas.experiments.Experiment.D;
 import static IdealGas.experiments.Experiment.WIDTH;
 
 
@@ -42,17 +42,19 @@ public class PlotKnudsen extends PlotTimeFunction{
             if (atom.x < WIDTH / 2) {
                 leftNum++;
                 leftRMS += atom.vx * atom.vx + atom.vy * atom.vy;
-            } else {
+            } else if (atom.x > WIDTH / 2 + 2 * D) {
                 rightNum++;
                 rightRMS += atom.vx * atom.vx + atom.vy * atom.vy;
             }
         }
         if (leftNum != 0) {
-            leftRMS = Math.sqrt(leftRMS / leftNum) * rightNum;
+            leftRMS = Math.sqrt(leftRMS / leftNum);
+            System.out.println(leftRMS);
             appendFunction("СКС в левом сосуде", leftRMS);
         }
         if (rightNum != 0) {
-            rightRMS = Math.sqrt(rightRMS / rightNum) * leftNum;
+            rightRMS = Math.sqrt(rightRMS / rightNum);
+            System.out.println(rightRMS);
             appendFunction("СКС в правом сосуде", rightRMS);
         }
     }

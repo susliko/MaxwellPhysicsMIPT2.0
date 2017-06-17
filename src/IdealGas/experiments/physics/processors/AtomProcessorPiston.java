@@ -24,8 +24,8 @@ public class AtomProcessorPiston implements AtomProcessor {
         }
         dv /= pistonWeight;
         y += vy * gasTPF / 1000;
-        vy += 100 * gasTPF / 1000 + dv;
-        if (y >= HEIGHT || y < 0)
+        vy += 1000.0 * gasTPF / 1000 + dv;
+        if (y >= HEIGHT && vy > 0 || y < 0 && vy < 0)
             vy = -vy;
     }
 

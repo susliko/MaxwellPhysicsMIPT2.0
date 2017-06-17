@@ -39,7 +39,7 @@ public class Experiment {
     public static final double boltzmannAcceleration = 100;
 
     // Number of holes in vertical line if ExpType - KNUDSEN
-    public static final int knudsenNumberOfHoles = 5;
+    public static int knudsenNumberOfHoles = 1;
 
     public static int pistonWeight = 1000;
 

@@ -56,10 +56,10 @@ public class KnudsenInfoPane extends InfoPane {
 
 
 
-    int getConcentrationLeft() {
+    private int getConcentrationLeft() {
         int atomsLeft = 0;
         for (Atom atom : atoms) {
-            if (atom.x <= Experiment.WIDTH / 2) {
+            if (atom.x < Experiment.WIDTH / 2) {
                 atomsLeft++;
             }
         }
@@ -68,10 +68,10 @@ public class KnudsenInfoPane extends InfoPane {
 
 
 
-    int getConcentrationRight() {
+    private int getConcentrationRight() {
         int atomsRight = 0;
         for (Atom atom : atoms) {
-            if (atom.x > Experiment.WIDTH / 2) {
+            if (atom.x > Experiment.WIDTH / 2 + 2 * Experiment.D) {
                 atomsRight++;
             }
         }

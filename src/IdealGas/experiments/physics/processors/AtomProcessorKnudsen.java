@@ -50,9 +50,9 @@ public class AtomProcessorKnudsen implements AtomProcessor {
 
 
     private boolean isNotInHole(Atom atom) {
-        for (int i = 1; i < knudsenNumberOfHoles; i++)
-            if (atom.y >= i * HEIGHT / knudsenNumberOfHoles - D / 2
-                    && atom.y <= i * HEIGHT / knudsenNumberOfHoles + D / 2)
+        for (int i = 1; i < knudsenNumberOfHoles + 1; i++)
+            if (atom.y >= i * HEIGHT / (knudsenNumberOfHoles + 1) - D / 2
+                    && atom.y <= i * HEIGHT / (knudsenNumberOfHoles + 1) + D / 2)
                 return false;
         return true;
     }
