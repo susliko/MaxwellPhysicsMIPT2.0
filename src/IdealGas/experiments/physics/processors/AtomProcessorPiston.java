@@ -7,7 +7,7 @@ import java.util.List;
 import static IdealGas.experiments.Experiment.*;
 
 public class AtomProcessorPiston implements AtomProcessor {
-    private double y = 0;
+    private double y = HEIGHT / 2;
     private double vy = 0;
 
     @Override

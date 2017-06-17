@@ -14,6 +14,7 @@ import IdealGas.experiments.plot.Plot;
 import IdealGas.experiments.plot.PlotDistribution.PlotBoltzmann;
 import IdealGas.experiments.plot.PlotDistribution.PlotMaxwell;
 import IdealGas.experiments.plot.PlotTimeFunction.PlotKnudsen;
+import IdealGas.experiments.plot.PlotTimeFunction.PlotPiston;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Experiment {
     // Number of holes in vertical line if ExpType - KNUDSEN
     public static final int knudsenNumberOfHoles = 5;
 
-    public static int pistonWeight = 10000;
+    public static int pistonWeight = 1000;
 
     // Shows whether experiment is running
     private boolean active = false;
@@ -91,7 +92,7 @@ public class Experiment {
                 AtomProcessorPiston piston = new AtomProcessorPiston();
                 arena = new ArenaFrame(atoms, new PainterPiston(piston));
                 generateAtomsPiston(atoms, velocity, numberOfAtoms);
-                plot = null;
+                plot = new PlotPiston(piston);
                 physics = new Physics(atoms, piston);
                 break;
             default:
@@ -206,7 +207,7 @@ public class Experiment {
         Random random = new Random(System.currentTimeMillis());
         for (int i = 0; i < numberOfAtoms; ++i) {
             int x = random.nextInt(WIDTH);
-            int y = random.nextInt(HEIGHT);
+            int y = random.nextInt(HEIGHT / 2) + HEIGHT / 2;
             double cos = 2 * Math.random() - 1;
             double sin = (random.nextInt() % 2 == 0)?(-1):(1)*Math.sqrt(1 - cos * cos);
             Atom atom = new Atom(x, y, cos * velocity, sin * velocity);

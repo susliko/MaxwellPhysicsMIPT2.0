@@ -1,10 +1,7 @@
 package IdealGas.experiments.graphics.frames;
 
 import IdealGas.ExpType;
-import IdealGas.experiments.graphics.panes.BoltzmannInfoPane;
-import IdealGas.experiments.graphics.panes.InfoPane;
-import IdealGas.experiments.graphics.panes.KnudsenInfoPane;
-import IdealGas.experiments.graphics.panes.MaxwellInfoPane;
+import IdealGas.experiments.graphics.panes.*;
 import IdealGas.experiments.physics.Atom;
 
 import javax.swing.*;
@@ -31,6 +28,8 @@ public class InfoFrame extends JFrame {
                 pane = new MaxwellInfoPane(atoms);
                 break;
             case PISTON:
+                pane = new PistonInfoPane(atoms);
+                break;
             case BOLTZMANN:
                 pane = new BoltzmannInfoPane(atoms);
                 break;

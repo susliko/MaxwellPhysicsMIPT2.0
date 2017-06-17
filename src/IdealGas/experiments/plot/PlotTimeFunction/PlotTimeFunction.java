@@ -64,7 +64,7 @@ public abstract class PlotTimeFunction implements Plot {
         this.functions = new HashMap<>();
 
         xyChart = (new XYChartBuilder()).width(600).height(600).title("Результаты эксперимента").build();
-        xyChart.getStyler().setLegendPosition(Styler.LegendPosition.InsideN);
+        xyChart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
         xyChart.getStyler().setDecimalPattern("#,###.##");
 
         swingWrapper = new SwingWrapper<>(xyChart);
