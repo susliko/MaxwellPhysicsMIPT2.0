@@ -1,4 +1,6 @@
-package IdealGas.experiments.physics;
+package IdealGas.experiments.physics.processors;
+
+import IdealGas.experiments.physics.Atom;
 
 import java.util.List;
 
@@ -7,7 +9,7 @@ import static IdealGas.experiments.Experiment.*;
 
 
 /**
- * Am implementation of @AtomProcessor for Boltzmann experiment
+ * Am implementation of @processors for Boltzmann experiment
  */
 public class AtomProcessorBoltzmann implements AtomProcessor {
 

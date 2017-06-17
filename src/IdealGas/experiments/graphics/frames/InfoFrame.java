@@ -30,6 +30,7 @@ public class InfoFrame extends JFrame {
             case MAXWELL:
                 pane = new MaxwellInfoPane(atoms);
                 break;
+            case PISTON:
             case BOLTZMANN:
                 pane = new BoltzmannInfoPane(atoms);
                 break;

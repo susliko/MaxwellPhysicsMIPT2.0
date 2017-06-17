@@ -2,6 +2,7 @@ package IdealGas.experiments.plot.PlotTimeFunction;
 
 import IdealGas.experiments.physics.Atom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static IdealGas.experiments.Experiment.WIDTH;
@@ -22,6 +23,7 @@ public class PlotKnudsen extends PlotTimeFunction{
         xyChart.setXAxisTitle("Время, сек");
         xyChart.setYAxisTitle("СКС, пикс/сек");
         xyChart.getStyler().setMarkerSize(0);
+//        xyChart.getStyler().setYAxisMax(5.0);
         declareFunction("СКС в левом сосуде");
         declareFunction("СКС в правом сосуде");
     }
@@ -33,9 +35,9 @@ public class PlotKnudsen extends PlotTimeFunction{
     @Override
     void updateFunctions() {
         double leftRMS = 0;
-        int leftNum = 0;
+        double leftNum = 0;
         double rightRMS = 0;
-        int rightNum = 0;
+        double rightNum = 0;
         for (Atom atom : atoms) {
             if (atom.x < WIDTH / 2) {
                 leftNum++;
@@ -46,11 +48,11 @@ public class PlotKnudsen extends PlotTimeFunction{
             }
         }
         if (leftNum != 0) {
-            leftRMS = Math.sqrt(leftRMS / leftNum);
+            leftRMS = Math.sqrt(leftRMS / leftNum) * rightNum;
             appendFunction("СКС в левом сосуде", leftRMS);
         }
         if (rightNum != 0) {
-            rightRMS = Math.sqrt(rightRMS / rightNum);
+            rightRMS = Math.sqrt(rightRMS / rightNum) * leftNum;
             appendFunction("СКС в правом сосуде", rightRMS);
         }
     }

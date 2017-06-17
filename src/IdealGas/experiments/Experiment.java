@@ -3,11 +3,13 @@ package IdealGas.experiments;
 import IdealGas.ExpType;
 import IdealGas.experiments.graphics.frames.ArenaFrame;
 import IdealGas.experiments.graphics.frames.InfoFrame;
-import IdealGas.experiments.graphics.painters.WallPainterKnudsen;
+import IdealGas.experiments.graphics.painters.PainterKnudsen;
+import IdealGas.experiments.graphics.painters.PainterPiston;
 import IdealGas.experiments.physics.Atom;
-import IdealGas.experiments.physics.AtomProcessorBoltzmann;
-import IdealGas.experiments.physics.AtomProcessorKnudsen;
+import IdealGas.experiments.physics.processors.AtomProcessorBoltzmann;
+import IdealGas.experiments.physics.processors.AtomProcessorKnudsen;
 import IdealGas.experiments.physics.Physics;
+import IdealGas.experiments.physics.processors.AtomProcessorPiston;
 import IdealGas.experiments.plot.Plot;
 import IdealGas.experiments.plot.PlotDistribution.PlotBoltzmann;
 import IdealGas.experiments.plot.PlotDistribution.PlotMaxwell;
@@ -36,9 +38,11 @@ public class Experiment {
     public static final double boltzmannAcceleration = 100;
 
     // Number of holes in vertical line if ExpType - KNUDSEN
-    public static final int knudsenNumberOfHoles = 10;
+    public static final int knudsenNumberOfHoles = 5;
 
-    // Shows whether the arena should be updated
+    public static int pistonWeight = 10000;
+
+    // Shows whether experiment is running
     private boolean active = false;
 
 
@@ -77,11 +81,18 @@ public class Experiment {
                 physics = new Physics(atoms, new AtomProcessorBoltzmann());
                 break;
             case KNUDSEN:
-                arena = new ArenaFrame(atoms, new WallPainterKnudsen());
+                arena = new ArenaFrame(atoms, new PainterKnudsen());
                 generateAtomsKnudsen(atoms, velocity, numberOfAtoms);
                 plot = new PlotKnudsen(atoms);
                 // see @AtomProcessorKnudsen
                 physics = new Physics(atoms, new AtomProcessorKnudsen(numberOfAtoms));
+                break;
+            case PISTON:
+                AtomProcessorPiston piston = new AtomProcessorPiston();
+                arena = new ArenaFrame(atoms, new PainterPiston(piston));
+                generateAtomsPiston(atoms, velocity, numberOfAtoms);
+                plot = null;
+                physics = new Physics(atoms, piston);
                 break;
             default:
                 arena = null;
@@ -104,24 +115,29 @@ public class Experiment {
             gasTimer  = System.currentTimeMillis();
             plotTimer = System.currentTimeMillis();
 
+            boolean gasWasUpdated = false;
             while (sinceGasUpdate > gasTPF) {
                 physics.update();
                 sinceGasUpdate -= gasTPF;
+                gasWasUpdated = true;
             }
 
             if (sincePlotUpdate > plotTPF) {
                 infoScreen.update();
-                plot.render();
+                if (plot != null)
+                    plot.render();
                 sincePlotUpdate = 0;
             }
 
-            arena.pack();
-            arena.repaint();
-            infoScreen.pack();
-            infoScreen.repaint();
+            if (gasWasUpdated) {
+                arena.pack();
+                arena.repaint();
+                infoScreen.pack();
+                infoScreen.repaint();
+            }
         }
-
-        plot.dispose();
+        if (plot != null)
+            plot.dispose();
         arena.dispose();
         infoScreen.dispose();
     }
@@ -138,8 +154,11 @@ public class Experiment {
     /**
      * Generates particles distributed at the arena randomly
      *
+     * Generates atoms having root mean square speed = <code>velocity</code>.
+     * Velocity vector is pointed on right-down corner
+     *
      * @param atoms reference to particles list
-     * @param velocity start velocity along X and Y axes for every particle
+     * @param velocity start root mean square speed
      * @param numberOfAtoms total number of particles
      */
     private void generateAtomsFullArena(List<Atom> atoms, int velocity, int numberOfAtoms) {
@@ -168,6 +187,29 @@ public class Experiment {
             int x = random.nextInt(WIDTH / 2);
             int y = random.nextInt(HEIGHT);
             Atom atom = new Atom(x, y, -v, v);
+            atoms.add(atom);
+        }
+    }
+
+
+    /**
+     * Generates particles distributed at the arena randomly
+     *
+     * Generates atoms having root mean square speed as module of velocity.
+     * Velocity vector is pointed randomly
+     *
+     * @param atoms reference to particles list
+     * @param velocity start root mean square speed
+     * @param numberOfAtoms total number of particles
+     */
+    private void generateAtomsPiston(List<Atom> atoms, int velocity, int numberOfAtoms) {
+        Random random = new Random(System.currentTimeMillis());
+        for (int i = 0; i < numberOfAtoms; ++i) {
+            int x = random.nextInt(WIDTH);
+            int y = random.nextInt(HEIGHT);
+            double cos = 2 * Math.random() - 1;
+            double sin = (random.nextInt() % 2 == 0)?(-1):(1)*Math.sqrt(1 - cos * cos);
+            Atom atom = new Atom(x, y, cos * velocity, sin * velocity);
             atoms.add(atom);
         }
     }

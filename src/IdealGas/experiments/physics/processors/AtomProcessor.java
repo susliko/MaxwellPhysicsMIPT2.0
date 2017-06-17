@@ -1,4 +1,6 @@
-package IdealGas.experiments.physics;
+package IdealGas.experiments.physics.processors;
+
+import IdealGas.experiments.physics.Atom;
 
 import java.util.List;
 

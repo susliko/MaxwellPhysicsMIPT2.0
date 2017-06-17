@@ -1,6 +1,7 @@
 package IdealGas.experiments.physics;
 
 import IdealGas.experiments.Experiment;
+import IdealGas.experiments.physics.processors.AtomProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class Physics {
      * Invoked every frame
      */
     public void update() {
-        // Call of @AtomProcessor instance
+        // Call of @processors instance
         if (atomProcessor != null)
             atomProcessor.processAtoms(atoms);
 

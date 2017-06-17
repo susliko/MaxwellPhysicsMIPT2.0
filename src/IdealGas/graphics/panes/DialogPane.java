@@ -14,7 +14,7 @@ public class DialogPane extends JPanel {
     public final int HEIGHT = 400;
     public final int WIDTH = 400;
 
-    private final String[] experiments = { "Максвелл", "Больцман", "Кнудсен" };
+    private final String[] experiments = { "Максвелл", "Больцман", "Кнудсен", "Поршень"};
 
     private JLabel velocityLabel;
     private JLabel numberLabel;
@@ -111,6 +111,8 @@ public class DialogPane extends JPanel {
             case "Кнудсен" :
                 experiment = ExpType.KNUDSEN;
                 break;
+            case "Поршень" :
+                experiment = ExpType.PISTON;
         }
         return experiment;
     }

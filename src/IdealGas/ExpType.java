@@ -10,8 +10,6 @@ public enum ExpType {
         }
     },
     BOLTZMANN,
-    KNUDSEN;
-
-    int velocity;
-    int N;
+    KNUDSEN,
+    PISTON
 }

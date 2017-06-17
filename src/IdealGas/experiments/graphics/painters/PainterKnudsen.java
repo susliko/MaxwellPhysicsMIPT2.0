@@ -6,7 +6,7 @@ import static IdealGas.experiments.Experiment.*;
 
 
 
-public class WallPainterKnudsen extends Painter {
+public class PainterKnudsen extends Painter {
     @Override
     public void paint(Graphics g) {
         Graphics2D g2= (Graphics2D)g;

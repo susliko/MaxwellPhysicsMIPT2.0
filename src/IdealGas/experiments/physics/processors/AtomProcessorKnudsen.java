@@ -1,4 +1,6 @@
-package IdealGas.experiments.physics;
+package IdealGas.experiments.physics.processors;
+
+import IdealGas.experiments.physics.Atom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import static IdealGas.experiments.Experiment.*;
 
 
 /**
- * Am implementation of @AtomProcessor for IdealGas experiment
+ * Am implementation of @processors for IdealGas experiment
  */
 public class AtomProcessorKnudsen implements AtomProcessor {
     private final List<Boolean> isLeftSide;
